@@ -74001,6 +74001,124 @@
       "language": "hi",
       "id": "pv-1795027410060-9w28u",
       "created_at": "2026-11-18T18:43:30.060Z"
+    },
+    {
+      "path": "/admin",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028648874-v92q6",
+      "created_at": "2026-11-18T19:04:08.874Z"
+    },
+    {
+      "path": "/admin/analytics",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028654154-dnimq",
+      "created_at": "2026-11-18T19:04:14.154Z"
+    },
+    {
+      "path": "/admin/news",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin/analytics",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028655555-wpbr3",
+      "created_at": "2026-11-18T19:04:15.555Z"
+    },
+    {
+      "path": "/admin/campaigns",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin/news",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028659399-2ag8f",
+      "created_at": "2026-11-18T19:04:19.399Z"
+    },
+    {
+      "path": "/admin/blogs",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin/campaigns",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028661116-6q2ud",
+      "created_at": "2026-11-18T19:04:21.116Z"
+    },
+    {
+      "path": "/admin/volunteers",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin/blogs",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028668165-symns",
+      "created_at": "2026-11-18T19:04:28.165Z"
+    },
+    {
+      "path": "/admin/settings",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin/volunteers",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028685135-j2ius",
+      "created_at": "2026-11-18T19:04:45.135Z"
+    },
+    {
+      "path": "/admin",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin/settings",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028692964-qym8l",
+      "created_at": "2026-11-18T19:04:52.964Z"
+    },
+    {
+      "path": "/admin/analytics",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_j3vdq1numwmhplsy",
+      "referrer": "http://localhost:3000/admin",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795028711466-7tsbw",
+      "created_at": "2026-11-18T19:05:11.466Z"
+    },
+    {
+      "path": "/test-verification",
+      "visitor_id": "test-visitor-101",
+      "session_id": "test-session-101",
+      "user_agent": "node",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795032703647-ydoox",
+      "created_at": "2026-11-18T20:11:43.647Z"
     }
   ],
   "analytics_events": [
@@ -105340,6 +105458,19 @@
     }
   ],
   "volunteers": [
+    {
+      "full_name": "Devendra Kumar Verma",
+      "phone": "+91 98280 99999",
+      "email": "devendra.verma@example.com",
+      "state": "Rajasthan",
+      "district": "Sikar",
+      "occupation": "Aspirant & Student Leader",
+      "preferred_role": "District Youth Coordinator",
+      "message": "Ready to mobilize 200 college students in Sikar for the Youth Charter.",
+      "id": "vol-1795032703758",
+      "status": "new",
+      "created_at": "2026-11-18T20:11:43.758Z"
+    },
     {
       "full_name": "Devendra Kumar Verma",
       "phone": "+91 98280 99999",

@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { trackEvent } from '@/components/shared/AnalyticsTracker';
-import { Play, Video, ArrowRight, Eye, Clock } from 'lucide-react';
+import { Play, ArrowUpRight, ExternalLink, Clock, Youtube } from 'lucide-react';
 import VideoModal from './VideoModal';
 
 export default function HomeMediaSection() {
-  const { t, isHindi } = useLanguage();
+  const { isHindi } = useLanguage();
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
 
   const videos = [
@@ -17,27 +17,40 @@ export default function HomeMediaSection() {
       title_hi: 'जयपुर महापंचायत में 50,000 युवाओं को सत्येंद्र राव का ऐतिहासिक संबोधन',
       title_en: 'Satyendra Rao Addresses 50,000 Youth at Jaipur Maha-Panchayat',
       duration: '18:45',
-      views: '1.42 लाख+',
-      category: isHindi ? 'ऐतिहासिक भाषण' : 'Keynote Speech',
-      thumbnail: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80'
+      views: '1.42 लाख views',
+      timeAgo: '2 weeks ago',
+      thumbnail: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80',
+      ytUrl: 'https://www.youtube.com/watch?v=5Qn-jD4pX7w'
     },
     {
       id: '9B6yK9E1l4M',
       title_hi: 'SI भर्ती परीक्षा में धांधली का खुलासा और पारदर्शी पुनः परीक्षा की मांग',
       title_en: 'SI Exam Irregularities Exposed: Evidence and Demand for Re-Exam',
       duration: '24:10',
-      views: '98 हजार+',
-      category: isHindi ? 'प्रेस कॉन्फ्रेंस' : 'Press Briefing',
-      thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80'
+      views: '98K views',
+      timeAgo: '3 weeks ago',
+      thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80',
+      ytUrl: 'https://www.youtube.com/watch?v=9B6yK9E1l4M'
     },
     {
       id: '3M8zW2kL5P0',
       title_hi: 'अजमेर से जयपुर विशाल पदयात्रा: युवाओं के संकल्प और संघर्ष की झलकियां',
       title_en: 'Foot March (Padyatra) from Ajmer to Jaipur: Highlights & Voices',
       duration: '14:20',
-      views: '86 हजार+',
-      category: isHindi ? 'दस्तावेजी वृत्तचित्र' : 'Documentary',
-      thumbnail: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80'
+      views: '86K views',
+      timeAgo: '1 month ago',
+      thumbnail: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80',
+      ytUrl: 'https://www.youtube.com/watch?v=3M8zW2kL5P0'
+    },
+    {
+      id: '7P1rT4uN8V9',
+      title_hi: 'युवा सुधार चार्टर: युवाओं के हकों की कानूनी गारंटी के 10 मुख्य बिंदु',
+      title_en: 'Youth Reform Charter Explained: 10 Actionable Policy Demands',
+      duration: '12:35',
+      views: '65K views',
+      timeAgo: '2 months ago',
+      thumbnail: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80',
+      ytUrl: 'https://www.youtube.com/watch?v=7P1rT4uN8V9'
     }
   ];
 
@@ -47,94 +60,117 @@ export default function HomeMediaSection() {
   };
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-white border-b border-purple-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-bold uppercase tracking-wider mb-2">
-              <Video className="w-3.5 h-3.5 text-purple-800" />
-              <span>{isHindi ? 'वीडियो भाषण एवं मीडिया संवाद' : 'Video Speeches & Media Dialogue'}</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-navy-900 font-hindi">
-              {isHindi ? 'सत्येंद्र राव के विचार और जनसंवाद' : 'Satyendra Rao\'s Voice & Public Dialogues'}
-            </h2>
-            <p className="text-sm text-slate-600 mt-1 max-w-2xl font-hindi">
-              {isHindi 
-                ? 'महापंचायतों, प्रेस वार्ता और युवा सम्मेलनों के प्रमुख वीडियो वक्तव्य' 
-                : 'Watch key video speeches, press conferences and ground youth mobilization rallies'}
-            </p>
+        {/* Centered Header matching Image 1 Reference */}
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-600 border border-red-200 text-xs font-bold uppercase tracking-wider">
+            <Youtube className="w-3.5 h-3.5 fill-current" />
+            <span>YOUTUBE</span>
           </div>
 
-          <a
-            href="/media"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-900 hover:bg-purple-950 text-white text-xs sm:text-sm font-bold shadow-sm transition-colors"
-          >
-            <span>{isHindi ? 'सभी वीडियो देखें' : 'View All Videos'}</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
+          <h2 className="text-3xl sm:text-4xl font-black text-navy-900 tracking-tight font-hindi">
+            {isHindi ? 'नवीनतम वीडियो संवाद (Recent Videos)' : 'Recent Videos'}
+          </h2>
+
+          <p className="text-sm text-slate-500 font-medium font-hindi">
+            {isHindi 
+              ? 'सत्येंद्र राव के नवीनतम भाषण, महापंचायत संवाद और भर्ती सुधार प्रेस वार्ताएं' 
+              : 'Watch my latest speeches, ground interactions, and youth press briefings'}
+          </p>
         </div>
 
-        {/* Videos Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {videos.map((v) => {
+        {/* 4 Cards in a Row matching Image 1 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {videos.map(v => {
             const title = isHindi ? v.title_hi : v.title_en;
+
             return (
               <div
                 key={v.id}
-                onClick={() => handlePlayVideo({ id: v.id, title })}
-                className="group cursor-pointer bg-royal-surface rounded-2xl overflow-hidden border border-purple-100 shadow-card hover:shadow-hover hover:-translate-y-1 transition-all duration-300"
+                className="bg-white rounded-2xl p-3 border border-slate-200 shadow-sm hover:shadow-hover hover:border-purple-200 transition-all duration-300 flex flex-col justify-between group"
               >
-                {/* Thumbnail with Overlay */}
-                <div className="relative aspect-video w-full overflow-hidden bg-slate-900">
-                  <Image
-                    src={v.thumbnail}
-                    alt={title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                <div>
+                  {/* Thumbnail */}
+                  <div
+                    onClick={() => handlePlayVideo({ id: v.id, title })}
+                    className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 cursor-pointer"
+                  >
+                    <Image
+                      src={v.thumbnail}
+                      alt={title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/25 group-hover:bg-black/15 transition-colors" />
 
-                  {/* Play Button Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-purple-900/90 text-white border-2 border-accent-yellow flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-purple-800 transition-transform">
-                      <Play className="w-6 h-6 fill-current text-accent-yellow ml-0.5" />
+                    {/* Centered Circular Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm text-white border-2 border-white/80 flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:border-red-600 transition-all shadow-lg">
+                        <Play className="w-5 h-5 fill-current ml-0.5" />
+                      </div>
+                    </div>
+
+                    {/* Duration Badge Bottom Right */}
+                    <div className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/80 text-[10px] font-bold text-white flex items-center gap-1">
+                      <Clock className="w-2.5 h-2.5 text-slate-300" />
+                      <span>{v.duration}</span>
                     </div>
                   </div>
 
-                  {/* Duration Badge */}
-                  <div className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/80 text-[11px] font-bold text-white flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-slate-300" />
-                    <span>{v.duration}</span>
-                  </div>
-
-                  {/* Category Badge */}
-                  <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-purple-900/90 text-[10px] font-bold text-accent-yellow border border-purple-700">
-                    {v.category}
+                  {/* Body */}
+                  <div className="pt-3.5 px-1 space-y-1.5">
+                    <h3
+                      onClick={() => handlePlayVideo({ id: v.id, title })}
+                      className="text-xs sm:text-sm font-bold text-navy-900 group-hover:text-purple-900 transition-colors line-clamp-2 leading-snug cursor-pointer font-hindi"
+                    >
+                      {title}
+                    </h3>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      {v.views} • {v.timeAgo}
+                    </p>
                   </div>
                 </div>
 
-                {/* Details */}
-                <div className="p-4 sm:p-5">
-                  <h3 className="text-sm sm:text-base font-bold text-navy-900 group-hover:text-purple-900 transition-colors line-clamp-2 leading-snug font-hindi">
-                    {title}
-                  </h3>
-                  
-                  <div className="mt-3 flex items-center justify-between text-xs text-slate-500 font-medium">
-                    <span className="flex items-center gap-1">
-                      <Eye className="w-3.5 h-3.5 text-purple-700" />
-                      <span>{v.views}</span>
-                    </span>
-                    <span className="text-purple-900 font-bold group-hover:underline">
-                      {isHindi ? 'अभी देखें ▶' : 'Watch Now ▶'}
-                    </span>
-                  </div>
+                {/* Bottom Action Footer matching Image 1 */}
+                <div className="pt-3 px-1 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-600">
+                  <button
+                    onClick={() => handlePlayVideo({ id: v.id, title })}
+                    className="inline-flex items-center gap-1.5 text-red-600 hover:text-red-700 font-bold transition-colors"
+                  >
+                    <Youtube className="w-4 h-4 fill-current" />
+                    <span>Watch on YouTube</span>
+                  </button>
+
+                  <a
+                    href={v.ytUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-400 hover:text-slate-700 transition-colors"
+                  >
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
                 </div>
 
               </div>
             );
           })}
+        </div>
+
+        {/* Centered Subscribe Button matching Image 1 */}
+        <div className="mt-12 text-center">
+          <a
+            href="https://youtube.com/@SatyendraRaoOfficial"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full border border-slate-300 hover:border-red-600 bg-white hover:bg-red-50/50 text-navy-900 hover:text-red-600 font-bold text-xs sm:text-sm shadow-xs hover:shadow-md transition-all duration-200"
+          >
+            <div className="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center">
+              <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
+            </div>
+            <span>{isHindi ? 'यूट्यूब चैनल सब्सक्राइब करें' : 'Subscribe to my channel'}</span>
+          </a>
         </div>
 
       </div>

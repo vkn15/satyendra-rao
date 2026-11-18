@@ -38,10 +38,10 @@ export default function KeySectionRow() {
                 <ArrowRight className="w-4 h-4" />
               </a>
 
-              {/* Cropped Photo from Poster */}
+              {/* Real Photo of Satyendra Rao */}
               <div className="relative w-20 h-24 rounded-xl overflow-hidden shadow-md border-2 border-purple-200 shrink-0 bg-purple-50">
                 <Image
-                  src="/images/satyendra_about.png"
+                  src="/images/satyendra_real.jpg"
                   alt="Satyendra Rao"
                   fill
                   className="object-cover object-top"
