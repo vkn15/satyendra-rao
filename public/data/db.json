@@ -74849,6 +74849,64 @@
       "language": "hi",
       "id": "pv-1795125163083-fkp56",
       "created_at": "2026-11-19T21:52:43.083Z"
+    },
+    {
+      "path": "/news",
+      "title": "Daily News & Media Coverage | Satyendra Rao",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_ojaqyofgmwo3bv2r",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125425433-m24dg",
+      "created_at": "2026-11-19T21:57:05.433Z"
+    },
+    {
+      "path": "/",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_tx0zmakrmwo3caep",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125445306-5qv4d",
+      "created_at": "2026-11-19T21:57:25.306Z"
+    },
+    {
+      "path": "/admin/news",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_viym06vfmwo3cnq2",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125462557-sg8p8",
+      "created_at": "2026-11-19T21:57:42.557Z"
+    },
+    {
+      "path": "/admin",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_viym06vfmwo3cnq2",
+      "referrer": "http://localhost:3000/admin/news",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125499224-4e6bc",
+      "created_at": "2026-11-19T21:58:19.224Z"
+    },
+    {
+      "path": "/blog",
+      "visitor_id": "test-visitor-202",
+      "session_id": "test-session-202",
+      "user_agent": "node",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125921514-i13je",
+      "created_at": "2026-11-19T22:05:21.514Z"
     }
   ],
   "analytics_events": [
@@ -105893,6 +105951,17 @@
       },
       "id": "ev-1795120782293-amh3p",
       "created_at": "2026-11-19T20:39:42.293Z"
+    },
+    {
+      "event_type": "read_original_news",
+      "path": "/",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "metadata": {
+        "news_id": "news-1",
+        "url": "https://www.bhaskar.com/rajasthan/news"
+      },
+      "id": "ev-1795125453589-d04p0",
+      "created_at": "2026-11-19T21:57:33.589Z"
     }
   ],
   "news_briefs": [
@@ -105900,8 +105969,8 @@
       "id": "news-1",
       "headline_en": "High Court Issues Crucial Notice on Recruitment Board Transparency & Answer Key Objections",
       "headline_hi": "भर्ती आयोग उत्तर कुंजी और पारदर्शिता पर उच्च न्यायालय ने जारी किया अहम नोटिस",
-      "source": "Dainik Bhaskar Rajasthan",
-      "source_url": "https://www.bhaskar.com/rajasthan/news",
+      "source": "Dainik Bhaskar",
+      "source_url": "https://www.bhaskar.com/local/rajasthan/",
       "published_date": "2026-11-17T14:43:30.055Z",
       "category": "Legal & Judiciary",
       "importance": "critical",
@@ -105919,7 +105988,7 @@
       ],
       "status": "published",
       "private_notes": "Critical legal milestone; aligns directly with Satyendra Rao Youth Charter Point 4.",
-      "views_count": 1420,
+      "views_count": 1421,
       "ai_generated": true,
       "ai_provider": "Gemini 1.5 Flash",
       "approved_at": "2026-11-17T16:43:30.055Z",
@@ -105931,7 +106000,7 @@
       "headline_en": "Cabinet Sub-Committee Discusses Strict Anti-Paper Leak Law Implementation and Fast-Track Tribunals",
       "headline_hi": "मंत्रिमंडलीय उप-समिति ने नकल विरोधी कड़े कानून और फास्ट ट्रैक अदालतों के गठन पर की चर्चा",
       "source": "Press Information Bureau (PIB)",
-      "source_url": "https://pib.gov.in",
+      "source_url": "https://www.pib.gov.in/indexd.aspx",
       "published_date": "2026-11-16T12:43:30.055Z",
       "category": "Policy & Governance",
       "importance": "high",
@@ -105961,7 +106030,7 @@
       "headline_en": "Over 12,000 Vacancies Announced in Health & Technical Departments for Upcoming Session",
       "headline_hi": "आगामी सत्र के लिए चिकित्सा एवं तकनीकी संवर्गों में 12,000 से अधिक रिक्त पदों की घोषणा",
       "source": "Rajasthan Patrika",
-      "source_url": "https://www.patrika.com/rajasthan-news",
+      "source_url": "https://www.patrika.com/rajasthan-news/",
       "published_date": "2026-11-15T10:43:30.055Z",
       "category": "Recruitment Notifications",
       "importance": "medium",
@@ -105990,8 +106059,8 @@
       "id": "news-4",
       "headline_en": "Youth Delegation Led by Satyendra Rao Submits 10-Point Charter to Chief Secretary",
       "headline_hi": "सत्येंद्र राव के नेतृत्व में युवा प्रतिनिधिमंडल ने मुख्य सचिव को सौंपा 10-सूत्रीय युवा सुधार चार्टर",
-      "source": "Navbharat Times",
-      "source_url": "https://navbharattimes.indiatimes.com",
+      "source": "Times of India",
+      "source_url": "https://timesofindia.indiatimes.com/city/jaipur",
       "published_date": "2026-11-14T16:43:30.055Z",
       "category": "Youth Advocacy",
       "importance": "high",
@@ -106020,8 +106089,8 @@
       "id": "news-5",
       "headline_en": "Union Public Service Commission Best Practices Study Group Formed for State Commissions",
       "headline_hi": "राज्य भर्ती आयोगों के आधुनिकीकरण हेतु यूपीएससी मॉडल अध्ययन दल का गठन",
-      "source": "The Hindu National Bureau",
-      "source_url": "https://www.thehindu.com",
+      "source": "The Hindu",
+      "source_url": "https://www.thehindu.com/news/national/",
       "published_date": "2026-11-13T13:43:30.055Z",
       "category": "Institutional Reforms",
       "importance": "general",
@@ -106279,6 +106348,19 @@
     }
   ],
   "volunteers": [
+    {
+      "full_name": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "phone": "9876543210",
+      "district": "Jaipur",
+      "interests": [
+        "Policy Research",
+        "Youth Mobilization"
+      ],
+      "id": "vol-1795125921652",
+      "status": "new",
+      "created_at": "2026-11-19T22:05:21.652Z"
+    },
     {
       "full_name": "Aarav Sharma",
       "email": "aarav.sharma@example.com",

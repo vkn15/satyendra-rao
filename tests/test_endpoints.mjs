@@ -198,9 +198,12 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/news`);
     if (!res.ok) throw new Error(`GET /news returned ${res.status}`);
     const html = await res.text();
-    // Check that direct links to real sources are present
-    if (!html.includes('https://www.bhaskar.com/rajasthan/news')) {
-      throw new Error('Missing direct news source link on /news');
+    // Check that direct links to real sources are present and verified (no 404s)
+    if (!html.includes('https://www.bhaskar.com/local/rajasthan/')) {
+      throw new Error('Missing verified Dainik Bhaskar link on /news');
+    }
+    if (html.includes('https://www.bhaskar.com/rajasthan/news')) {
+      throw new Error('Found broken Dainik Bhaskar 404 link on /news');
     }
     // Verify AI summarization labels are removed
     if (html.includes('AI-Powered Daily News Briefing') || html.includes('एआई-संचालित दैनिक समाचार बुलेटिन')) {

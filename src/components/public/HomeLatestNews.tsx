@@ -15,8 +15,10 @@ import {
   ArrowRight,
   ShieldCheck,
   Languages,
-  Link2
+  Link2,
+  BookOpen
 } from 'lucide-react';
+import NewsReaderModal from '@/components/public/NewsReaderModal';
 
 export default function HomeLatestNews({ initialNews = [] }: { initialNews?: NewsBrief[] }) {
   const { t, isHindi } = useLanguage();
@@ -26,6 +28,7 @@ export default function HomeLatestNews({ initialNews = [] }: { initialNews?: New
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [importantIds, setImportantIds] = useState<Set<string>>(new Set());
   const [langPreference, setLangPreference] = useState<'both' | 'hi' | 'en'>('both');
+  const [activeArticle, setActiveArticle] = useState<NewsBrief | null>(null);
 
   useEffect(() => {
     // Load saved bookmarks from localStorage
@@ -185,17 +188,26 @@ export default function HomeLatestNews({ initialNews = [] }: { initialNews?: New
                     </div>
                   </div>
 
-                  {/* Direct Clickable Headline */}
-                  <a
-                    href={item.source_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => handleReadOriginal(item)}
-                    className="group/h inline-flex items-start gap-1.5 text-base sm:text-[17px] font-bold text-navy-900 leading-snug hover:text-purple-900 transition-colors font-hindi"
-                  >
-                    <span>{isHindi ? item.headline_hi : item.headline_en}</span>
-                    <ExternalLink className="w-4 h-4 text-purple-600 opacity-60 group-hover/h:opacity-100 shrink-0 mt-1 transition-opacity" />
-                  </a>
+                  {/* Direct Clickable Headline (Opens In-Portal Reader, External Icon Opens Live Source) */}
+                  <div className="flex items-start gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setActiveArticle(item)}
+                      className="text-left text-base sm:text-[17px] font-bold text-navy-900 leading-snug hover:text-purple-900 transition-colors font-hindi cursor-pointer"
+                    >
+                      {isHindi ? item.headline_hi : item.headline_en}
+                    </button>
+                    <a
+                      href={item.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => handleReadOriginal(item)}
+                      title={isHindi ? `${item.source} पर सीधे खोलें` : `Open on ${item.source}`}
+                      className="p-1 text-purple-700 hover:text-purple-950 transition-colors shrink-0 mt-0.5"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
 
                   {/* Source indicator */}
                   <div className="mt-2 flex items-center gap-2 text-xs text-purple-900 font-semibold">
@@ -232,19 +244,29 @@ export default function HomeLatestNews({ initialNews = [] }: { initialNews?: New
                 </div>
 
                 {/* Bottom Action Footer */}
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-                  <a
-                    href={item.source_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => handleReadOriginal(item)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-900 hover:bg-purple-950 px-3.5 py-2 rounded-xl transition-all shadow-xs"
-                  >
-                    <span>{isHindi ? 'सीधे समाचार पढ़ें' : 'Read Direct News'}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setActiveArticle(item)}
+                      className="inline-flex items-center gap-1 text-xs font-bold text-purple-900 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-xl transition-all shadow-2xs"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>{isHindi ? 'विवरण पढ़ें' : 'Read'}</span>
+                    </button>
 
-                  <div className="flex items-center gap-1.5">
+                    <a
+                      href={item.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => handleReadOriginal(item)}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-900 hover:bg-purple-950 px-3 py-1.5 rounded-xl transition-all shadow-xs"
+                    >
+                      <span>{isHindi ? `सीधे ${item.source} पर पढ़ें` : `Open on ${item.source}`}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-1">
                     {/* Copy Direct Link */}
                     <button
                       onClick={(e) => {
@@ -292,6 +314,13 @@ export default function HomeLatestNews({ initialNews = [] }: { initialNews?: New
         </div>
 
       </div>
+
+      {/* In-Portal News Reader Modal */}
+      <NewsReaderModal
+        article={activeArticle}
+        onClose={() => setActiveArticle(null)}
+        isHindi={isHindi}
+      />
     </section>
   );
 }
