@@ -163,21 +163,21 @@ export default function AboutPage() {
                 {/* Glow Backdrop */}
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent rounded-3xl blur-2xl pointer-events-none" />
 
-                {/* Photo Container */}
-                <div className="relative w-full max-w-[430px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161220] group">
+                {/* Photo Container - Exact Black and White Arms-Crossed Portrait matching Aabhas Maldahiyar Reference */}
+                <div className="relative w-full max-w-[430px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#120F1D] group">
                   <Image
-                    src="/images/satyendra_rao_new.jpg"
-                    alt="Satyendra Rao"
+                    src="/images/satyendra_about_bw.jpg"
+                    alt="Satyendra Rao - Youth Reform Movement Leader"
                     fill
                     priority
-                    className="object-cover object-top filter contrast-[1.05] brightness-[0.98] group-hover:scale-102 transition-transform duration-700"
+                    className="object-cover object-top filter grayscale contrast-[1.22] brightness-[0.96] group-hover:scale-102 transition-transform duration-700"
                   />
 
-                  {/* Atmospheric Vignette overlay matching the screenshot */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A10] via-transparent to-black/20" />
+                  {/* Atmospheric Vignette overlay matching the Aabhas Maldahiyar screenshot */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A10] via-transparent to-black/25 pointer-events-none" />
 
                   {/* Subtle Bottom Caption */}
-                  <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-[#0C0A10] via-[#0C0A10]/80 to-transparent">
+                  <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-[#0C0A10] via-[#0C0A10]/85 to-transparent">
                     <p className="text-white font-black text-lg tracking-tight font-hindi">
                       {isHindi ? 'सत्येंद्र राव' : 'Satyendra Rao'}
                     </p>

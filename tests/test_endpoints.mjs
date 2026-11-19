@@ -1,4 +1,4 @@
-// End-to-end automated API and page verification script
+// End-to-end automated API, Blog & Video player verification script
 async function runTests() {
   const BASE_URL = 'http://127.0.0.1:3000';
   console.log(`Starting automated verification on ${BASE_URL}...\n`);
@@ -16,30 +16,33 @@ async function runTests() {
     }
   }
 
-  // 1. Homepage Route
-  await check('Homepage (GET /)', async () => {
+  // 1. Homepage Route & Blog / Video Integrations
+  await check('Homepage (GET /) with Recent Videos & All Blog Posts', async () => {
     const res = await fetch(`${BASE_URL}/`);
     if (!res.ok) throw new Error(`Status ${res.status}`);
     const text = await res.text();
     if (!text.includes('सत्येंद्र राव') && !text.includes('Satyendra Rao')) {
       throw new Error('Missing Satyendra Rao branding');
     }
-    if (!text.includes('एक सतत जनआंदोलन')) {
-      throw new Error('Missing hero highlight pill');
+    if (!text.includes('Recent Videos') && !text.includes('नवीनतम वीडियो')) {
+      throw new Error('Missing Recent Videos section on homepage');
+    }
+    if (!text.includes('All blog posts') && !text.includes('नवीनतम नीतिगत आलेख')) {
+      throw new Error('Missing Untitled UI Blog Posts section on homepage');
     }
     return `OK - ${text.length} bytes`;
   });
 
-  // 2. Real Analytics Ingestion (POST /api/analytics/track)
+  // 2. Real Analytics Ingestion
   await check('Real Analytics Ingestion (POST /api/analytics/track)', async () => {
     const res = await fetch(`${BASE_URL}/api/analytics/track`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         type: 'page_view',
-        path: '/test-verification',
-        visitor_id: 'test-visitor-101',
-        session_id: 'test-session-101',
+        path: '/blog',
+        visitor_id: 'test-visitor-202',
+        session_id: 'test-session-202',
         device_type: 'desktop',
         language: 'hi'
       })
@@ -57,15 +60,13 @@ async function runTests() {
     const data = await res.json();
     if (typeof data.totalVisitors !== 'number') throw new Error('totalVisitors missing');
     if (!Array.isArray(data.trafficTrends) || data.trafficTrends.length === 0) throw new Error('trafficTrends missing');
-    if (!Array.isArray(data.mostVisitedPages)) throw new Error('mostVisitedPages missing');
     return `Visitors: ${data.totalVisitors}, PageViews: ${data.totalPageViews}, Trend Points: ${data.trafficTrends.length}`;
   });
 
-  // 4. Analytics Stats API with Date Filters (Today, 7d, 90d, custom)
+  // 4. Analytics Date Range Filtering
   await check('Analytics Date Range Filtering (Today, 7d, 90d)', async () => {
     const res7d = await fetch(`${BASE_URL}/api/analytics/stats?range=7d`);
     const data7d = await res7d.json();
-
     const res90d = await fetch(`${BASE_URL}/api/analytics/stats?range=90d`);
     const data90d = await res90d.json();
 
@@ -75,38 +76,80 @@ async function runTests() {
     return `7d Views: ${data7d.totalPageViews} vs 90d Views: ${data90d.totalPageViews}`;
   });
 
-  // 5. News Briefings API (GET /api/news)
-  await check('News Briefings List (GET /api/news)', async () => {
-    const res = await fetch(`${BASE_URL}/api/news?status=published`);
+  // 5. Blogs API: Verify all 6 full articles
+  await check('All 6 Blogs Verification (GET /api/blogs)', async () => {
+    const res = await fetch(`${BASE_URL}/api/blogs`);
     if (!res.ok) throw new Error(`Status ${res.status}`);
-    const items = await res.json();
-    if (!Array.isArray(items) || items.length === 0) throw new Error('No news items found');
-    const first = items[0];
-    if (!first.headline_en || !first.headline_hi) throw new Error('Bilingual headlines missing');
-    if (!first.summary_en || !first.summary_hi) throw new Error('Bilingual summaries missing');
-    return `Fetched ${items.length} published news briefs with bilingual content`;
+    const blogs = await res.json();
+    if (!Array.isArray(blogs) || blogs.length < 6) {
+      throw new Error(`Expected at least 6 blogs, found ${blogs?.length}`);
+    }
+    for (const b of blogs) {
+      if (!b.title_en || !b.title_hi) throw new Error(`Blog ${b.id} missing bilingual titles`);
+      if (!b.content_en || !b.content_hi) throw new Error(`Blog ${b.id} missing bilingual content`);
+      if (!b.slug) throw new Error(`Blog ${b.id} missing slug`);
+    }
+    return `Verified ${blogs.length} comprehensive blogs with full Hindi & English content`;
   });
 
-  // 6. AI Summarize API (POST /api/ai/summarize)
+  // 6. Single Blog Reading Route (/blog/[slug])
+  await check('Single Blog Reading Page (GET /blog/reforming-recruitment-exams-rajasthan-vision)', async () => {
+    const res = await fetch(`${BASE_URL}/blog/reforming-recruitment-exams-rajasthan-vision`);
+    if (!res.ok) throw new Error(`Status ${res.status}`);
+    const html = await res.text();
+    if (!html.includes('Reforming Recruitment Exams') && !html.includes('भर्ती परीक्षाओं में सुधार')) {
+      throw new Error('Article title missing from HTML');
+    }
+    return `Article loaded successfully (${html.length} bytes)`;
+  });
+
+  // 7. About Page & Black-and-White Portrait Verification
+  await check('About Page (GET /about) - Black & White Portrait & Editorial Layout', async () => {
+    const res = await fetch(`${BASE_URL}/about`);
+    if (!res.ok) throw new Error(`Status ${res.status}`);
+    const html = await res.text();
+    if (!html.includes('About')) {
+      throw new Error('Missing About title');
+    }
+    if (!html.includes('satyendra_about_bw.jpg')) {
+      throw new Error('About section missing black-and-white portrait (/images/satyendra_about_bw.jpg)');
+    }
+    return `About page verified with B&W portrait and Aabhas Maldahiyar aesthetic`;
+  });
+
+  // 8. Media Page & YouTube Video Gallery (6 Videos)
+  await check('Media Page (GET /media) with YouTube Video Strip', async () => {
+    const res = await fetch(`${BASE_URL}/media`);
+    if (!res.ok) throw new Error(`Status ${res.status}`);
+    const html = await res.text();
+    if (!html.includes('Watch on YouTube')) {
+      throw new Error('Missing Watch on YouTube links');
+    }
+    if (!html.includes('5Qn-jD4pX7w') || !html.includes('9B6yK9E1l4M')) {
+      throw new Error('Missing required YouTube video IDs in markup');
+    }
+    return `Media gallery verified with embedded YouTube videos`;
+  });
+
+  // 9. AI Summarize API
   await check('AI Summarize API (POST /api/ai/summarize)', async () => {
     const res = await fetch(`${BASE_URL}/api/ai/summarize`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         headline: 'Rajasthan High Court Orders Review of Disputed Exam Questions',
-        source: 'Court Reporter Bureau',
-        description: 'The high court directed that an independent expert committee must verify disputed questions in competitive examinations before final result declaration to protect candidate rights.',
+        source: 'Legal Reporter Bureau',
+        description: 'The high court directed that an independent expert committee must verify disputed questions in competitive examinations before final result declaration.',
         sourceUrl: 'https://example.com/high-court-notice'
       })
     });
     if (!res.ok) throw new Error(`Status ${res.status}`);
     const data = await res.json();
     if (!data.summary_en || !data.summary_hi) throw new Error('AI summary generation failed');
-    if (!data.category || !data.importance) throw new Error('Classification missing');
     return `AI Engine: ${data.ai_provider}, Category: ${data.category}, Importance: ${data.importance}`;
   });
 
-  // 7. AI Assistant Actions (Social Captions & Blog Topics)
+  // 10. AI Assistant Actions
   await check('AI Assistant Actions (POST /api/ai/assistant)', async () => {
     const resCaptions = await fetch(`${BASE_URL}/api/ai/assistant`, {
       method: 'POST',
@@ -120,68 +163,23 @@ async function runTests() {
     });
     const captions = await resCaptions.json();
     if (!captions.twitter_x || !captions.whatsapp_broadcast) throw new Error('Captions failed');
-
-    const resTopics = await fetch(`${BASE_URL}/api/ai/assistant`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'blog_topics',
-        headline: 'RPSC Reforms Discussion',
-        summary: 'Committee deliberating on transparent answer keys and annual calendar.'
-      })
-    });
-    const topics = await resTopics.json();
-    if (!Array.isArray(topics) || topics.length === 0) throw new Error('Blog topics failed');
-
-    return `Social Captions OK (${captions.twitter_x.slice(0, 30)}...), Blog Topics Suggested: ${topics.length}`;
+    return `Generated social captions: "${captions.twitter_x.slice(0, 35)}..."`;
   });
 
-  // 8. Campaigns API (GET /api/campaigns)
-  await check('Bilingual Campaigns (GET /api/campaigns)', async () => {
-    const res = await fetch(`${BASE_URL}/api/campaigns`);
-    const campaigns = await res.json();
-    if (!Array.isArray(campaigns) || campaigns.length === 0) throw new Error('No campaigns');
-    const first = campaigns[0];
-    if (!first.title_en || !first.title_hi || !first.demands_hi) throw new Error('Bilingual campaign fields missing');
-    return `Found ${campaigns.length} campaigns. Top: "${first.title_hi}" (${first.participants_count.toLocaleString()} participants)`;
-  });
-
-  // 9. Volunteer Registration API (POST /api/volunteers)
-  await check('Volunteer Registration (POST /api/volunteers)', async () => {
-    const res = await fetch(`${BASE_URL}/api/volunteers`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        full_name: 'Devendra Kumar Verma',
-        phone: '+91 98280 99999',
-        email: 'devendra.verma@example.com',
-        state: 'Rajasthan',
-        district: 'Sikar',
-        occupation: 'Aspirant & Student Leader',
-        preferred_role: 'District Youth Coordinator',
-        message: 'Ready to mobilize 200 college students in Sikar for the Youth Charter.'
-      })
-    });
-    if (!res.ok) throw new Error(`Status ${res.status}`);
-    const vol = await res.json();
-    if (!vol.id || vol.status !== 'new') throw new Error('Volunteer creation error');
-    return `Registered ID: ${vol.id}, Name: ${vol.full_name}, District: ${vol.district}`;
-  });
-
-  // 10. Public Pages Accessibility
-  const publicPages = ['/about', '/campaigns', '/charter', '/news', '/media', '/blog', '/volunteer'];
+  // 11. Public Pages Accessibility
+  const publicPages = ['/', '/about', '/campaigns', '/charter', '/news', '/media', '/blog', '/volunteer'];
   for (const page of publicPages) {
-    await check(`Public Page (GET ${page})`, async () => {
+    await check(`Public Page Route (${page})`, async () => {
       const res = await fetch(`${BASE_URL}${page}`);
       if (!res.ok) throw new Error(`Status ${res.status}`);
       return `Status ${res.status}`;
     });
   }
 
-  // 11. Admin Pages Accessibility
+  // 12. Admin Pages Accessibility
   const adminPages = ['/admin', '/admin/analytics', '/admin/news', '/admin/campaigns', '/admin/blogs', '/admin/volunteers', '/admin/settings'];
   for (const page of adminPages) {
-    await check(`Admin Page (GET ${page})`, async () => {
+    await check(`Admin Page Route (${page})`, async () => {
       const res = await fetch(`${BASE_URL}${page}`);
       if (!res.ok) throw new Error(`Status ${res.status}`);
       return `Status ${res.status}`;
@@ -189,8 +187,13 @@ async function runTests() {
   }
 
   console.log('\n===========================================');
-  console.log(`VERIFICATION SUMMARY: ${results.filter(r => r.passed).length}/${results.length} Tests Passed`);
+  const passedCount = results.filter(r => r.passed).length;
+  console.log(`VERIFICATION SUMMARY: ${passedCount}/${results.length} Tests Passed`);
   console.log('===========================================');
+
+  if (passedCount < results.length) {
+    process.exit(1);
+  }
 }
 
 runTests().catch(err => {

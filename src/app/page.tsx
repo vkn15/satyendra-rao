@@ -8,8 +8,15 @@ import Footer from '@/components/public/Footer';
 import HomeLatestNews from '@/components/public/HomeLatestNews';
 import HomeVolunteerSection from '@/components/public/HomeVolunteerSection';
 import HomeMediaSection from '@/components/public/HomeMediaSection';
+import HomeBlogSection from '@/components/public/HomeBlogSection';
+import { getDatabase } from '@/lib/storage';
+
+export const dynamic = 'force-dynamic';
 
 export default function HomePage() {
+  const db = getDatabase();
+  const initialBlogs = db.blogs?.slice(0, 3) || [];
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -29,8 +36,11 @@ export default function HomePage() {
         {/* AI-Powered Daily News Highlights */}
         <HomeLatestNews />
 
-        {/* Video Speeches & Ground Rallies */}
+        {/* Video Speeches & Ground Rallies (Shadcn UI Video Strip) */}
         <HomeMediaSection />
+
+        {/* Thought Leadership & Policy Blog Posts (Untitled UI 3-Column Grid) */}
+        <HomeBlogSection initialBlogs={initialBlogs} />
 
         {/* Fast Volunteer Registration */}
         <HomeVolunteerSection />

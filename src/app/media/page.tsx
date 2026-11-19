@@ -8,11 +8,19 @@ import ImpactRibbon from '@/components/public/ImpactRibbon';
 import VideoModal from '@/components/public/VideoModal';
 import { useLanguage } from '@/context/LanguageContext';
 import { trackEvent } from '@/components/shared/AnalyticsTracker';
-import { Play, Video, Eye, Clock, Calendar, Newspaper, ExternalLink } from 'lucide-react';
+import { Play, Video, Eye, Clock, Calendar, Newspaper, ExternalLink, Youtube, Sparkles, Filter } from 'lucide-react';
 
 export default function MediaPage() {
   const { isHindi } = useLanguage();
-  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [activeVideo, setActiveVideo] = useState<{
+    id: string;
+    title: string;
+    category?: string;
+    views?: string;
+    duration?: string;
+    description?: string;
+  } | null>(null);
 
   const videos = [
     {
@@ -23,8 +31,8 @@ export default function MediaPage() {
       desc_en: 'Historic address at Jaipur youth assembly calling for accountability, time-bound recruitments and exam security.',
       duration: '18:45',
       views: '1.42 लाख+',
-      date: '15 दिन पूर्व',
-      category: 'Keynote Speech',
+      date: isHindi ? '15 दिन पूर्व' : '15 days ago',
+      category: 'Speeches',
       thumbnail: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80'
     },
     {
@@ -35,8 +43,8 @@ export default function MediaPage() {
       desc_en: 'Detailed press briefing highlighting documented irregularities and calling for fair opportunity for genuine candidates.',
       duration: '24:10',
       views: '98 हजार+',
-      date: '25 दिन पूर्व',
-      category: 'Press Conference',
+      date: isHindi ? '25 दिन पूर्व' : '25 days ago',
+      category: 'Investigations',
       thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80'
     },
     {
@@ -47,7 +55,7 @@ export default function MediaPage() {
       desc_en: 'Over 10,000 students walked 135 km with Satyendra Rao to demand youth reform charter implementation.',
       duration: '14:20',
       views: '86 हजार+',
-      date: '35 दिन पूर्व',
+      date: isHindi ? '35 दिन पूर्व' : '35 days ago',
       category: 'Documentary',
       thumbnail: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80'
     },
@@ -59,103 +67,168 @@ export default function MediaPage() {
       desc_en: 'Explaining how the 10-point Youth Reform Charter guarantees transparent, time-bound examinations for every student.',
       duration: '12:35',
       views: '65 हजार+',
-      date: '42 दिन पूर्व',
+      date: isHindi ? '42 दिन पूर्व' : '42 days ago',
       category: 'Policy Explained',
       thumbnail: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'M7lc1UVf-VE',
+      title_hi: 'उच्च न्यायालय के ऐतिहासिक निर्णय पर प्रेस वार्ता: ओएमआर डिजिटल सुरक्षा',
+      title_en: 'Press Conference on High Court Verdict & OMR Digital Archiving',
+      desc_hi: 'ओएमआर डिजिटल कार्बन कॉपी और परीक्षा केंद्रों पर बायोमेट्रिक सुरक्षा पर उच्च न्यायालय के निर्णय पर प्रेस ब्रीफिंग।',
+      desc_en: 'Media briefing following the High Court order on mandatory carbon copy disclosures and security protocols.',
+      duration: '21:15',
+      views: '54 हजार+',
+      date: isHindi ? '48 दिन पूर्व' : '48 days ago',
+      category: 'Press Conference',
+      thumbnail: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'kJQP7kiw5Fk',
+      title_hi: 'कोचिंग हब की जमीनी हकीकत: प्रतियोगी छात्रों से सीधा संवाद और समाधान',
+      title_en: 'Ground Reality of Coaching Hubs: Direct Interaction with Aspirants',
+      desc_hi: 'सीकर और कोटा के कमरों में रहकर छात्रों के दैनिक संघर्ष, मानसिक तनाव और छात्र-कल्याण नीतियों पर खुली बातचीत।',
+      desc_en: 'Visiting student rooms in Sikar and Kota to understand day-to-day challenges, hostel rent exploitation and mental wellness.',
+      duration: '16:50',
+      views: '72 हजार+',
+      date: isHindi ? '55 दिन पूर्व' : '55 days ago',
+      category: 'Student Townhalls',
+      thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80'
     }
   ];
 
   const pressClippings = [
     {
       media: 'Dainik Bhaskar',
-      headline_hi: 'सत्येंद्र राव के नेतृत्व में 1.5 लाख अभ्यर्थियों ने उठाई पुनः परीक्षा की मांग',
-      headline_en: '1.5 Lakh Candidates Demand Re-Examination Under Satyendra Rao\'s Leadership',
-      date: 'Nov 12, 2026'
+      headline_hi: 'सत्येंद्र राव के नेतृत्व में 1.5 लाख अभ्यर्थियों ने उठाई परीक्षा बीमा और 90 दिन में भर्ती की मांग',
+      headline_en: 'Under Satyendra Rao leadership, 150K candidates demand exam insurance & 90-day recruitment ceiling',
+      date: '12 Jan 2026'
     },
     {
       media: 'Rajasthan Patrika',
-      headline_hi: 'आरपीएससी सुधारों पर सरकार को सौंपा 10 सूत्रीय युवा चार्टर',
-      headline_en: '10-Point Youth Charter Submitted to Administration on RPSC Reforms',
-      date: 'Nov 08, 2026'
+      headline_hi: 'अजमेर से जयपुर पदयात्रा: RPSC में आमूलचूल सुधारों हेतु सरकार को सौंपा 10 सूत्रीय युवा चार्टर',
+      headline_en: 'Ajmer to Jaipur Padyatra: 10-point Youth Charter submitted to government for structural RPSC reforms',
+      date: '28 Dec 2025'
     },
     {
-      media: 'The Hindu',
-      headline_hi: 'भर्ती परीक्षाओं में जवाबदेही हेतु जयपुर में विशाल छात्र महापंचायत',
-      headline_en: 'Massive Youth Assembly in Jaipur Demanding Public Recruitment Accountability',
-      date: 'Oct 29, 2026'
+      media: 'The Times of India',
+      headline_hi: 'युवा कार्यकर्ता सत्येंद्र राव ने उच्च न्यायालय में दायर की जनहित याचिका, डिजिटल ओएमआर सुरक्षा पर मांगा आदेश',
+      headline_en: 'Social activist Satyendra Rao moves HC demanding digital carbon copies of OMR sheets across exams',
+      date: '15 Nov 2025'
     }
   ];
+
+  const categories = [
+    { key: 'all', label_en: 'All Videos (6)', label_hi: 'सभी वीडियो (6)' },
+    { key: 'Speeches', label_en: 'Maha-Panchayat & Speeches', label_hi: 'महापंचायत एवं भाषण' },
+    { key: 'Investigations', label_en: 'Investigations', label_hi: 'जांच एवं खुलासे' },
+    { key: 'Documentary', label_en: 'Padyatra Documentary', label_hi: 'पदयात्रा वृत्तचित्र' },
+    { key: 'Policy Explained', label_en: 'Policy Explained', label_hi: 'नीति विश्लेषण' },
+    { key: 'Press Conference', label_en: 'Press Conferences', label_hi: 'प्रेस वार्ता' },
+    { key: 'Student Townhalls', label_en: 'Student Townhalls', label_hi: 'छात्र जनसंवाद' }
+  ];
+
+  const filteredVideos = selectedCategory === 'all'
+    ? videos
+    : videos.filter(v => v.category === selectedCategory);
+
+  const handlePlay = (v: typeof videos[0]) => {
+    const title = isHindi ? v.title_hi : v.title_en;
+    const description = isHindi ? v.desc_hi : v.desc_en;
+    setActiveVideo({
+      id: v.id,
+      title,
+      category: v.category,
+      views: v.views,
+      duration: v.duration,
+      description
+    });
+    trackEvent('video_watch', { video_id: v.id, title });
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
 
       <main className="flex-1">
-        {/* Hero */}
-        <section className="bg-gradient-to-b from-purple-950 via-purple-900 to-[#1F0935] text-white py-16">
+        
+        {/* Header Hero */}
+        <section className="bg-gradient-to-b from-purple-950 via-purple-900 to-navy-900 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-accent-yellow text-xs font-bold uppercase tracking-wider mb-3">
-                <Video className="w-3.5 h-3.5" />
-                <span>{isHindi ? 'वीडियो भाषण एवं मीडिया गैलरी' : 'Video Speeches & Media'}</span>
+            <div className="max-w-3xl space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-600/90 text-white text-xs font-bold uppercase tracking-widest shadow-sm">
+                <Youtube className="w-3.5 h-3.5 fill-current" />
+                <span>OFFICIAL YOUTUBE & MEDIA ARCHIVE</span>
               </div>
-              <h1 className="text-3xl sm:text-5xl font-black tracking-tight font-hindi">
-                {isHindi ? 'मीडिया कवरेज एवं वीडियो उद्बोधन' : 'Media Coverage & Video Addresses'}
+
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight font-hindi">
+                {isHindi ? 'वीडियो वक्तव्य एवं मीडिया गैलरी' : 'Video Addresses & Media Gallery'}
               </h1>
-              <p className="mt-4 text-base sm:text-lg text-purple-200 leading-relaxed font-hindi">
+
+              <p className="text-purple-200 text-sm sm:text-base leading-relaxed font-hindi">
                 {isHindi 
-                  ? 'सत्येंद्र राव की प्रमुख प्रेस वार्ताएं, जनसभाएं, टीवी इंटरव्यू और समाचार पत्रों में प्रकाशित रिपोर्ट।'
-                  : 'Watch video addresses, press briefings, and explore print and television media coverages.'}
+                  ? 'सत्येंद्र राव के ऐतिहासिक संबोधन, प्रेस वार्ताएं, पदयात्रा वृत्तचित्र और समाचार पत्रों में प्रमुख कवरेज का प्रामाणिक संग्रह।'
+                  : 'Watch video addresses, investigative press briefings, grassroots marches, and verified press clippings of the Youth Reform Movement.'}
               </p>
+
+              {/* YouTube Channel CTA */}
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://youtube.com/@SatyendraRaoOfficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg transition-colors"
+                >
+                  <Youtube className="w-4 h-4 fill-current" />
+                  <span>{isHindi ? 'यूट्यूब चैनल सब्सक्राइब करें' : 'Subscribe to Official YouTube Channel'}</span>
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Video Grid */}
-        <section className="py-16 bg-slate-50">
+        {/* Video Gallery Section */}
+        <section className="py-14 bg-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-600 text-xs font-black uppercase tracking-widest mb-2">
-                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                  </svg>
-                  <span>YOUTUBE CHANNEL</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-navy-900 font-hindi">
-                  {isHindi ? 'नवीनतम वीडियो वक्तव्य (Recent Videos)' : 'Recent Video Addresses'}
-                </h2>
-              </div>
-
-              <a
-                href="https://youtube.com/@SatyendraRaoOfficial"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs shadow-xs transition-colors self-start md:self-auto"
-              >
-                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-rose-600">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                <span>{isHindi ? 'चैनल सब्सक्राइब करें' : 'Subscribe to my channel'}</span>
-              </a>
+            
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+              <Filter className="w-4 h-4 text-slate-400 shrink-0 ml-1 mr-1" />
+              {categories.map((cat) => {
+                const label = isHindi ? cat.label_hi : cat.label_en;
+                const active = selectedCategory === cat.key;
+                return (
+                  <button
+                    key={cat.key}
+                    onClick={() => setSelectedCategory(cat.key)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all ${
+                      active
+                        ? 'bg-purple-900 text-white shadow-sm'
+                        : 'bg-white text-slate-700 border border-slate-200 hover:border-purple-300'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {videos.map(v => {
+            {/* Videos Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredVideos.map((v) => {
                 const title = isHindi ? v.title_hi : v.title_en;
+                const desc = isHindi ? v.desc_hi : v.desc_en;
 
                 return (
                   <div
                     key={v.id}
-                    className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                    className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300"
                   >
                     <div>
+                      {/* Thumbnail with centered play button */}
                       <div
-                        onClick={() => {
-                          setActiveVideo({ id: v.id, title });
-                          trackEvent('video_watch', { video_id: v.id, title });
-                        }}
-                        className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900 cursor-pointer group"
+                        onClick={() => handlePlay(v)}
+                        className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900 cursor-pointer"
                       >
                         <Image
                           src={v.thumbnail}
@@ -165,48 +238,64 @@ export default function MediaPage() {
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
 
+                        {/* Centered Play Button */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="w-12 h-12 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:bg-rose-600 transition-all">
                             <Play className="w-5 h-5 fill-current ml-0.5" />
                           </div>
                         </div>
 
-                        <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[11px] font-bold text-white flex items-center gap-1">
+                        {/* Category badge top left */}
+                        <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-purple-900/90 text-[10px] font-bold text-white uppercase tracking-wider backdrop-blur-xs">
+                          {v.category}
+                        </div>
+
+                        {/* Duration bottom right */}
+                        <div className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/80 text-[11px] font-bold text-white flex items-center gap-1">
                           <Clock className="w-3 h-3 text-slate-300" />
                           <span>{v.duration}</span>
                         </div>
                       </div>
 
-                      <div className="p-4 space-y-1.5">
+                      {/* Content */}
+                      <div className="p-5 space-y-2">
+                        <div className="text-[11px] font-semibold text-slate-500">
+                          <span>{v.views}</span>
+                          <span className="mx-1.5">•</span>
+                          <span>{v.date}</span>
+                        </div>
+
                         <h3 
-                          onClick={() => {
-                            setActiveVideo({ id: v.id, title });
-                            trackEvent('video_watch', { video_id: v.id, title });
-                          }}
-                          className="text-xs sm:text-sm font-bold text-navy-900 hover:text-purple-900 font-hindi leading-snug line-clamp-2 cursor-pointer"
+                          onClick={() => handlePlay(v)}
+                          className="text-base font-bold text-navy-900 group-hover:text-purple-900 font-hindi leading-snug cursor-pointer line-clamp-2"
                         >
                           {title}
                         </h3>
 
-                        <p className="text-[11px] text-slate-500 font-medium">
-                          {v.views} • {v.date}
+                        <p className="text-xs text-slate-600 font-hindi line-clamp-2 leading-relaxed">
+                          {desc}
                         </p>
                       </div>
                     </div>
 
-                    <div className="px-4 pb-4 pt-1">
-                      <button
-                        onClick={() => {
-                          setActiveVideo({ id: v.id, title });
-                          trackEvent('video_watch', { video_id: v.id, title });
-                        }}
+                    {/* Footer Actions */}
+                    <div className="px-5 pb-5 pt-1 flex items-center justify-between border-t border-slate-100 mt-2">
+                      <a
+                        href={`https://www.youtube.com/watch?v=${v.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-xs font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1.5 transition-colors"
                       >
-                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
-                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
+                        <Youtube className="w-3.5 h-3.5 fill-current" />
                         <span>Watch on YouTube</span>
                         <ExternalLink className="w-3 h-3 ml-0.5" />
+                      </a>
+
+                      <button
+                        onClick={() => handlePlay(v)}
+                        className="text-xs font-bold text-purple-900 hover:text-purple-950 px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors"
+                      >
+                        {isHindi ? 'प्ले करें' : 'Play Now'}
                       </button>
                     </div>
                   </div>
@@ -215,11 +304,16 @@ export default function MediaPage() {
             </div>
 
             {/* Press Clippings Section */}
-            <div className="mt-16">
-              <h2 className="text-2xl sm:text-3xl font-black text-navy-900 font-hindi mb-8 flex items-center gap-2">
-                <Newspaper className="w-7 h-7 text-purple-900" />
-                <span>{isHindi ? 'समाचार पत्रों में कवरेज (Press Coverage)' : 'Press Coverage'}</span>
-              </h2>
+            <div className="mt-20">
+              <div className="mb-8">
+                <span className="text-xs font-bold text-purple-900 uppercase tracking-widest block mb-1">
+                  PRINT & DIGITAL MEDIA
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-navy-900 font-hindi flex items-center gap-2">
+                  <Newspaper className="w-7 h-7 text-purple-900" />
+                  <span>{isHindi ? 'समाचार पत्रों में प्रमुख कवरेज' : 'Verified Press Coverage'}</span>
+                </h2>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {pressClippings.map((item, idx) => (
@@ -240,7 +334,7 @@ export default function MediaPage() {
 
                     <div className="pt-2">
                       <span className="text-xs font-bold text-purple-800 hover:text-purple-950 flex items-center gap-1">
-                        <span>{isHindi ? 'प्रामाणिक कवरेज' : 'Verified Coverage'}</span>
+                        <span>{isHindi ? 'प्रामाणिक प्रेस साक्ष्य' : 'Verified Archive Document'}</span>
                         <ExternalLink className="w-3 h-3" />
                       </span>
                     </div>
@@ -261,6 +355,10 @@ export default function MediaPage() {
         <VideoModal
           videoId={activeVideo.id}
           title={activeVideo.title}
+          category={activeVideo.category}
+          views={activeVideo.views}
+          duration={activeVideo.duration}
+          description={activeVideo.description}
           onClose={() => setActiveVideo(null)}
         />
       )}

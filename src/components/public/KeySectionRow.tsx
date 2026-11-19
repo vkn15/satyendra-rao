@@ -38,13 +38,13 @@ export default function KeySectionRow() {
                 <ArrowRight className="w-4 h-4" />
               </a>
 
-              {/* Photo of Satyendra Rao */}
-              <div className="relative w-24 h-28 rounded-2xl overflow-hidden shadow-md border-2 border-purple-200 shrink-0 bg-purple-50">
+              {/* Photo of Satyendra Rao in Black & White */}
+              <div className="relative w-24 h-28 rounded-2xl overflow-hidden shadow-md border-2 border-purple-200 shrink-0 bg-slate-900">
                 <Image
-                  src="/images/satyendra_rao_new.jpg"
+                  src="/images/satyendra_about_bw.jpg"
                   alt="Satyendra Rao"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover object-top filter grayscale contrast-125"
                 />
               </div>
             </div>

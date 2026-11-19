@@ -309,7 +309,7 @@ This is not a political slogan; it is the constitutional right of every young ci
     reading_time_minutes: 5,
     views_count: 4890,
     tags: ['Youth Reform', 'RPSC', 'Recruitment Policy', 'Constitutional Rights'],
-    cover_image: '/images/satyendra_hero.png',
+    cover_image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&auto=format&fit=crop&q=80',
     meta_description_en: 'Satyendra Rao outlines the comprehensive reform blueprint for transparent, time-bound recruitments in Rajasthan.',
     meta_description_hi: 'सत्येंद्र राव द्वारा राजस्थान में पारदर्शी, समयबद्ध और निष्पक्ष भर्ती परीक्षाओं हेतु संपूर्ण सुधार विजन।',
     status: 'published'
@@ -338,7 +338,7 @@ We have presented a comprehensive reform document outlining:
     reading_time_minutes: 6,
     views_count: 3620,
     tags: ['Institutional Reform', 'Governance', 'Youth Policy'],
-    cover_image: '/images/satyendra_about.png',
+    cover_image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80',
     meta_description_en: 'Structural institutional changes required in state recruitment bodies to restore meritocracy.',
     meta_description_hi: 'राज्य भर्ती आयोगों में मेरिट और पारदर्शिता की बहाली हेतु अनिवार्य संरचनात्मक बदलाव।',
     status: 'published'
@@ -367,9 +367,96 @@ Our legal research team has drafted the 'Rajasthan Youth Examination Security Bi
     reading_time_minutes: 7,
     views_count: 5120,
     tags: ['Paper Leak Law', 'Legal Safeguards', 'Youth Security'],
-    cover_image: '/images/satyendra_hero.png',
+    cover_image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&auto=format&fit=crop&q=80',
     meta_description_en: 'Satyendra Rao details the concrete legal safeguards required to permanently eradicate paper leak mafias.',
     meta_description_hi: 'पेपर लीक माफियाओं के स्थायी खात्मे और युवा सुरक्षा हेतु सत्येंद्र राव के कानूनी सुझाव।',
+    status: 'published'
+  },
+  {
+    id: 'blog-4',
+    slug: 'ten-point-youth-reform-charter-detailed-analysis',
+    title_en: '10-Point Youth Reform Charter: A Detailed Clause-by-Clause Analysis',
+    title_hi: '10-सूत्रीय युवा सुधार चार्टर: धारावार विस्तृत विश्लेषण और संवैधानिक आधार',
+    excerpt_en: 'Breaking down the constitutional basis and administrative mechanisms behind the historic 10-Point Youth Reform Charter.',
+    excerpt_hi: 'ऐतिहासिक 10-सूत्रीय युवा सुधार चार्टर के हर बिंदु की संवैधानिक व्याख्या, प्रशासनिक क्रियान्वयन और युवा अधिकारों का विश्लेषण।',
+    content_en: `The 10-Point Youth Reform Charter was not born in bureaucratic air-conditioned corridors. It was drafted across hundreds of student meetings in Sikar, Jaipur, and Jodhpur.
+
+Key clauses include:
+1. 150 km Maximum Distance: Ensuring students, especially female candidates, do not suffer extreme travel distress.
+2. Candidate Exam Insurance: A statutory guarantee of ₹5,000 compensation per student if an exam is abruptly cancelled due to state failure.
+3. Independent Youth Lokpal: A 3-member ombudsman bench headed by a retired High Court judge to investigate candidate complaints with full subpoena powers.
+4. OMR Digital Transparency: Public publication of raw scanned answer sheets within 48 hours of test conclusion.
+5. Strict 90-Day Recruitment Schedule: Strict calendar enforcement with personal pecuniary liability on delinquent administrative officers.`,
+    content_hi: `10-सूत्रीय युवा सुधार चार्टर किसी वातानुकूलित दफ्तर में नहीं बना है। यह सीकर, जयपुर और जोधपुर के छात्र संवादों में युवाओं के आंसुओं और संकल्प से उपजा जनदस्तावेज है।
+
+प्रमुख धाराएं:
+1. 150 किमी की अधिकतम दूरी: विशेषकर महिला अभ्यर्थियों को लंबी और असुरक्षित यात्राओं से मुक्ति दिलाना।
+2. परीक्षार्थी बीमा सुरक्षा: सरकारी विफलता से परीक्षा रद्द होने पर प्रत्येक पंजीकृत छात्र को ₹5,000 की वैधानिक क्षतिपूर्ति।
+3. स्वतंत्र युवा लोकपाल: सेवानिवृत्त उच्च न्यायालय न्यायाधीश की अध्यक्षता में 3-सदस्यीय निष्पक्ष शिकायत निवारण पीठ।
+4. 48 घंटे में ओएमआर डिजिटल प्रकाशन: परीक्षा समाप्त होने के 48 घंटे में ओएमआर स्कैन प्रति सार्वजनिक करना।
+5. 90 दिवसीय भर्ती कैलेंडर: भर्ती प्रक्रिया में विलंब करने वाले अधिकारियों पर व्यक्तिगत जवाबदेही और जुर्माना।`,
+    author: 'Satyendra Rao',
+    published_date: getPastDate(35),
+    reading_time_minutes: 8,
+    views_count: 6240,
+    tags: ['Youth Charter', 'Candidate Rights', 'Policy Blueprint'],
+    cover_image: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=800&auto=format&fit=crop&q=80',
+    meta_description_en: 'Detailed clause-by-clause analysis of Satyendra Rao 10-point Youth Reform Charter.',
+    meta_description_hi: 'सत्येंद्र राव के 10-सूत्रीय युवा सुधार चार्टर का संपूर्ण धारावार विश्लेषण।',
+    status: 'published'
+  },
+  {
+    id: 'blog-5',
+    slug: 'mental-health-coaching-hostels-standing-with-aspirants',
+    title_en: 'The Hidden Crisis: Mental Health in Coaching Hubs & Our Support Network',
+    title_hi: 'प्रतियोगी छात्रों का मानसिक स्वास्थ्य: हॉस्टलों का अदृश्य संकट और स्थायी समाधान',
+    excerpt_en: 'Addressing the psychological toll of exam cancellations, systemic delays, and creating a compassionate peer support infrastructure.',
+    excerpt_hi: 'बार-बार परीक्षा रद्द होने से उपजे मानसिक तनाव और अवसाद का समाधान: एक संवेदनशील और सशक्त युवा सुरक्षा तंत्र की आवश्यकता।',
+    content_en: `Behind every exam cancellation headline lies an unspoken human tragedy: young minds breaking under unbearable familial pressure, relentless financial strain, and an uncertain future.
+
+Our movement has instituted 24/7 Aspirant Helpline desks in Jaipur and Kota staffed by youth volunteers and certified counselors. We firmly believe that no examination score is worth a precious human life.
+
+We advocate for mandatory counseling cells in every coaching institute, cap on aggressive non-refundable fee exploitation, and an institutionalized culture that values merit without crushing youthful spirit.`,
+    content_hi: `परीक्षा रद्द होने की हर खबर के पीछे एक अदृश्य मानवीय त्रासदी छुपी होती है: किसान पिता का कर्ज, मां की उम्मीदें और एक छोटे से कमरे में घुटता युवा का आत्मविश्वास।
+
+हमारे आंदोलन ने जयपुर और कोटा में 24/7 छात्र हेल्पलाइन स्थापित की है, जहां अनुभवी स्वयंसेवक और परामर्शदाता छात्रों को संबल प्रदान कर रहे हैं। हमारा दृढ़ विश्वास है कि कोई भी परीक्षा किसी अनमोल जीवन से बड़ी नहीं हो सकती।
+
+हम हर कोचिंग संस्थान में अनिवार्य काउंसलिंग सेल, शोषणकारी गैर-वापसी योग्य फीस पर नियंत्रण और छात्र-हितैषी शैक्षणिक वातावरण की कानूनी मांग कर रहे हैं।`,
+    author: 'Satyendra Rao',
+    published_date: getPastDate(45),
+    reading_time_minutes: 5,
+    views_count: 7890,
+    tags: ['Student Wellness', 'Mental Health', 'Youth Mentorship'],
+    cover_image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80',
+    meta_description_en: 'Satyendra Rao on mental health crisis among competitive exam aspirants in coaching hubs.',
+    meta_description_hi: 'प्रतियोगी छात्रों के मानसिक स्वास्थ्य और अवसाद से मुक्ति हेतु सत्येंद्र राव के विचार।',
+    status: 'published'
+  },
+  {
+    id: 'blog-6',
+    slug: 'foot-march-ajmer-jaipur-peoples-movement',
+    title_en: 'Grassroots Satyagraha: Milestones from the 135 km Ajmer to Jaipur Padyatra',
+    title_hi: '135 किमी अजमेर-जयपुर विशाल पदयात्रा: जनसत्याग्रह के अनुभव और जनसमर्थन',
+    excerpt_en: 'Reflecting on 6 days of walking under scorching sun with 10,000 youth from RPSC Ajmer to the Secretariat in Jaipur.',
+    excerpt_hi: 'भीषण गर्मी में आरपीएससी अजमेर से शासन सचिवालय जयपुर तक 10,000 युवाओं के साथ 6 दिनों की ऐतिहासिक पदयात्रा का संस्मरण।',
+    content_en: `When ten thousand youth walk together for 135 kilometers along National Highway 48, blisters on their feet become medals of honor.
+
+Villagers in Kishangarh, Dudu, and Bagru came out to offer food and water to marching students, proving that our demand for corruption-free examinations is not an isolated student grievance—it is the moral conscience of our entire society.
+
+That padyatra demonstrated to the administrative powers that when the youth of Rajasthan unite peacefully for justice, no bureaucratic wall is tall enough to resist the truth.`,
+    content_hi: `जब 10,000 युवा नेशनल हाइवे 48 पर 135 किलोमीटर एक साथ कदम से कदम मिलाकर चलते हैं, तो पैरों के छाले सम्मान का पदक बन जाते हैं।
+
+किशनगढ़, दूदू और बगरू के ग्रामीणों ने सड़कों पर आकर पदयात्रियों को जल और भोजन कराया, जिससे यह सिद्ध हुआ कि भ्रष्टाचार-मुक्त परीक्षाओं की मांग केवल छात्रों की नहीं, बल्कि समूचे समाज की नैतिक अंतरात्मा की आवाज है।
+
+उस पदयात्रा ने प्रशासनिक शक्ति को यह दिखा दिया कि जब युवा शांतिपूर्ण सत्याग्रह पर उतरता है, तो सच्चाई के सामने कोई भी तानाशाही नहीं टिक सकती।`,
+    author: 'Satyendra Rao',
+    published_date: getPastDate(60),
+    reading_time_minutes: 6,
+    views_count: 9430,
+    tags: ['Padyatra', 'Grassroots Movement', 'Public Unity'],
+    cover_image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80',
+    meta_description_en: 'Memoirs from the 135 km peaceful satyagraha march from Ajmer to Jaipur for youth rights.',
+    meta_description_hi: 'अजमेर से जयपुर 135 किमी पदयात्रा के प्रेरणादायक अनुभव और युवा शक्ति की विजय।',
     status: 'published'
   }
 ];
@@ -426,6 +513,32 @@ const INITIAL_VIDEOS: YouTubeVideo[] = [
     views_count: 65200,
     published_date: getPastDate(42),
     category: 'Policy Explained'
+  },
+  {
+    id: 'yt-5',
+    video_id: 'M7lc1UVf-VE',
+    title_en: 'Press Conference on High Court Verdict & OMR Digital Archiving',
+    title_hi: 'उच्च न्यायालय के ऐतिहासिक निर्णय पर प्रेस वार्ता: ओएमआर डिजिटल सुरक्षा',
+    description_en: 'Media briefing following the High Court order on mandatory carbon copy disclosures and security protocols.',
+    description_hi: 'ओएमआर डिजिटल कार्बन कॉपी और परीक्षा केंद्रों पर बायोमेट्रिक सुरक्षा पर उच्च न्यायालय के निर्णय पर प्रेस ब्रीफिंग।',
+    thumbnail_url: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&auto=format&fit=crop&q=80',
+    duration: '21:15',
+    views_count: 54100,
+    published_date: getPastDate(48),
+    category: 'Press Conference'
+  },
+  {
+    id: 'yt-6',
+    video_id: 'kJQP7kiw5Fk',
+    title_en: 'Ground Reality of Coaching Hubs: Direct Interaction with Aspirants',
+    title_hi: 'कोचिंग हब की जमीनी हकीकत: प्रतियोगी छात्रों से सीधा संवाद और समाधान',
+    description_en: 'Visiting student rooms in Sikar and Kota to understand day-to-day challenges, hostel rent exploitation and mental wellness.',
+    description_hi: 'सीकर और कोटा के कमरों में रहकर छात्रों के दैनिक संघर्ष, मानसिक तनाव और छात्र-कल्याण नीतियों पर खुली बातचीत।',
+    thumbnail_url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80',
+    duration: '16:50',
+    views_count: 72300,
+    published_date: getPastDate(55),
+    category: 'Student Townhalls'
   }
 ];
 
