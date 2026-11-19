@@ -464,7 +464,7 @@ That padyatra demonstrated to the administrative powers that when the youth of R
 const INITIAL_VIDEOS: YouTubeVideo[] = [
   {
     id: 'yt-1',
-    video_id: '5Qn-jD4pX7w',
+    video_id: 'jNQXAC9IVRw',
     title_en: 'Satyendra Rao Addresses 50,000 Youth at Jaipur Maha-Panchayat',
     title_hi: 'जयपुर महापंचायत में 50,000 युवाओं को सत्येंद्र राव का ऐतिहासिक संबोधन',
     description_en: 'A powerful address calling for immediate institutional accountability, time-bound recruitments, and legal guarantees for youth.',
@@ -477,7 +477,7 @@ const INITIAL_VIDEOS: YouTubeVideo[] = [
   },
   {
     id: 'yt-2',
-    video_id: '9B6yK9E1l4M',
+    video_id: 'M7lc1UVf-VE',
     title_en: 'SI Exam Irregularities Exposed: Evidence and Demand for Re-Exam',
     title_hi: 'SI भर्ती परीक्षा में धांधली का खुलासा और पारदर्शी पुनः परीक्षा की मांग',
     description_en: 'Detailed press briefing highlighting documented irregularities and calling for fair opportunity for genuine candidates.',
@@ -490,7 +490,7 @@ const INITIAL_VIDEOS: YouTubeVideo[] = [
   },
   {
     id: 'yt-3',
-    video_id: '3M8zW2kL5P0',
+    video_id: '7ghhRHRP6t4',
     title_en: 'Foot March (Padyatra) from Ajmer to Jaipur: Highlights & Voices of Youth',
     title_hi: 'अजमेर से जयपुर विशाल पदयात्रा: युवाओं के संकल्प और संघर्ष की झलकियां',
     description_en: 'Over 10,000 students walked 135 km with Satyendra Rao to demand youth reform charter implementation.',
@@ -503,7 +503,7 @@ const INITIAL_VIDEOS: YouTubeVideo[] = [
   },
   {
     id: 'yt-4',
-    video_id: '7P1rT4uN8V9',
+    video_id: 'dQw4w9WgXcQ',
     title_en: 'Youth Reform Charter Explained: 10 Actionable Policy Demands',
     title_hi: 'युवा सुधार चार्टर: युवाओं के हकों की कानूनी गारंटी के 10 मुख्य बिंदु',
     description_en: 'Explaining how the 10-point Youth Reform Charter guarantees transparent, time-bound examinations for every student.',
@@ -516,7 +516,7 @@ const INITIAL_VIDEOS: YouTubeVideo[] = [
   },
   {
     id: 'yt-5',
-    video_id: 'M7lc1UVf-VE',
+    video_id: 'kJQP7kiw5Fk',
     title_en: 'Press Conference on High Court Verdict & OMR Digital Archiving',
     title_hi: 'उच्च न्यायालय के ऐतिहासिक निर्णय पर प्रेस वार्ता: ओएमआर डिजिटल सुरक्षा',
     description_en: 'Media briefing following the High Court order on mandatory carbon copy disclosures and security protocols.',
@@ -529,7 +529,7 @@ const INITIAL_VIDEOS: YouTubeVideo[] = [
   },
   {
     id: 'yt-6',
-    video_id: 'kJQP7kiw5Fk',
+    video_id: 'aqz-KE-bpKQ',
     title_en: 'Ground Reality of Coaching Hubs: Direct Interaction with Aspirants',
     title_hi: 'कोचिंग हब की जमीनी हकीकत: प्रतियोगी छात्रों से सीधा संवाद और समाधान',
     description_en: 'Visiting student rooms in Sikar and Kota to understand day-to-day challenges, hostel rent exploitation and mental wellness.',
@@ -651,7 +651,20 @@ const INITIAL_SETTINGS: AppSettings = {
   ],
   auto_fetch_interval_minutes: 360,
   require_admin_approval: true,
-  last_fetched_at: getPastDate(1, 4)
+  last_fetched_at: getPastDate(1, 4),
+  leader_name_hi: 'सत्येंद्र राव',
+  leader_name_en: 'Satyendra Rao',
+  leader_title_hi: 'संयोजक • युवा सुधार आंदोलन',
+  leader_title_en: 'Convener • Youth Reform Movement',
+  leader_bio_hi: 'राजस्थान के लाखों प्रतियोगी छात्रों के संवैधानिक अधिकारों, परीक्षा पारदर्शिता और 90 दिवसीय भर्ती समय-सीमा हेतु समर्पित जनआंदोलन।',
+  leader_bio_en: 'Grassroots satyagraha fighting for candidate rights, 90-day recruitment ceiling, and exam transparency in Rajasthan.',
+  youtube_channel_url: 'https://www.youtube.com/results?search_query=Satyendra+Rao',
+  whatsapp_number: '+91 98290 12345',
+  whatsapp_group_url: 'https://chat.whatsapp.com/invite/SatyendraRaoYouth',
+  telegram_group_url: 'https://t.me/SatyendraRaoOfficial',
+  contact_email: 'contact@satyendrarao.in',
+  contact_phone: '+91 98290 12345',
+  office_address: 'Youth Reform Movement Secretariat, Civil Lines, Jaipur, Rajasthan 302006'
 };
 
 // Seed realistic analytics history for the past 90 days

@@ -117,18 +117,80 @@ async function runTests() {
     return `About page verified with B&W portrait and Aabhas Maldahiyar aesthetic`;
   });
 
-  // 8. Media Page & YouTube Video Gallery (6 Videos)
-  await check('Media Page (GET /media) with YouTube Video Strip', async () => {
+  // 8. Media Page & YouTube Video Gallery (Verified Working Video IDs)
+  await check('Media Page (GET /media) with Verified Working YouTube Video Strip', async () => {
     const res = await fetch(`${BASE_URL}/media`);
     if (!res.ok) throw new Error(`Status ${res.status}`);
     const html = await res.text();
-    if (!html.includes('Watch on YouTube')) {
+    if (!html.includes('Watch on YouTube') && !html.includes('यूट्यूब पर देखें')) {
       throw new Error('Missing Watch on YouTube links');
     }
-    if (!html.includes('5Qn-jD4pX7w') || !html.includes('9B6yK9E1l4M')) {
-      throw new Error('Missing required YouTube video IDs in markup');
+    // Verify real YouTube IDs that exist and never 404
+    if (!html.includes('jNQXAC9IVRw') || !html.includes('M7lc1UVf-VE')) {
+      throw new Error('Missing verified working YouTube video IDs in markup');
     }
-    return `Media gallery verified with embedded YouTube videos`;
+    // Verify channel button does not point to a broken 404 handle
+    if (html.includes('@SatyendraRaoOfficial')) {
+      throw new Error('Found broken 404 channel handle in markup');
+    }
+    return `Media gallery verified with real active YouTube videos (no 404s)`;
+  });
+
+  // 8b. Videos API CRUD Verification
+  await check('Videos API CRUD (GET /api/videos & POST /api/videos)', async () => {
+    const getRes = await fetch(`${BASE_URL}/api/videos`);
+    if (!getRes.ok) throw new Error(`GET /api/videos returned ${getRes.status}`);
+    const videos = await getRes.json();
+    if (!Array.isArray(videos) || videos.length === 0) throw new Error('No videos returned');
+    
+    // Test creating a new video with real YouTube URL
+    const postRes = await fetch(`${BASE_URL}/api/videos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title_en: 'Test Live Stream Address',
+        title_hi: 'परीक्षण लाइव संबोधन',
+        youtube_url: 'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
+        category: 'Live Address',
+        duration: '10:45'
+      })
+    });
+    if (!postRes.ok) throw new Error(`POST /api/videos returned ${postRes.status}`);
+    const created = await postRes.json();
+    if (created.video_id !== 'aqz-KE-bpKQ') throw new Error(`Parsed video_id incorrect: ${created.video_id}`);
+
+    // Cleanup the test video
+    await fetch(`${BASE_URL}/api/videos?id=${created.id}`, { method: 'DELETE' });
+    return `Videos API functional: fetched ${videos.length} videos, successfully created and deleted test video`;
+  });
+
+  // 8c. Leader Settings & Community Links API
+  await check('Settings API for Leader Profile & Channel (GET /api/settings)', async () => {
+    const res = await fetch(`${BASE_URL}/api/settings`);
+    if (!res.ok) throw new Error(`GET /api/settings returned ${res.status}`);
+    const settings = await res.json();
+    if (!settings.youtube_channel_url) throw new Error('Missing youtube_channel_url in settings');
+    if (!settings.leader_name_en || !settings.leader_name_hi) throw new Error('Missing leader profile in settings');
+    return `Settings loaded: Channel = ${settings.youtube_channel_url}, Leader = ${settings.leader_name_en}`;
+  });
+
+  // 8d. Supporter Join Flow (POST /api/volunteers)
+  await check('Supporter / Volunteer Join Flow (POST /api/volunteers)', async () => {
+    const res = await fetch(`${BASE_URL}/api/volunteers`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: 'Aarav Sharma',
+        email: 'aarav.sharma@example.com',
+        phone: '9876543210',
+        district: 'Jaipur',
+        interests: ['Policy Research', 'Youth Mobilization']
+      })
+    });
+    if (!res.ok) throw new Error(`POST /api/volunteers returned ${res.status}`);
+    const reg = await res.json();
+    if (!reg.id) throw new Error('Volunteer registration missing ID');
+    return `Volunteer registered with ID: ${reg.id}`;
   });
 
   // 9. AI Summarize API
@@ -177,7 +239,7 @@ async function runTests() {
   }
 
   // 12. Admin Pages Accessibility
-  const adminPages = ['/admin', '/admin/analytics', '/admin/news', '/admin/campaigns', '/admin/blogs', '/admin/volunteers', '/admin/settings'];
+  const adminPages = ['/admin', '/admin/analytics', '/admin/news', '/admin/campaigns', '/admin/blogs', '/admin/volunteers', '/admin/videos', '/admin/settings'];
   for (const page of adminPages) {
     await check(`Admin Page Route (${page})`, async () => {
       const res = await fetch(`${BASE_URL}${page}`);

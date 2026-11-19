@@ -189,4 +189,18 @@ export interface AppSettings {
   auto_fetch_interval_minutes: number;
   require_admin_approval: boolean;
   last_fetched_at?: string;
+  // Leader Profile & Social Media Links
+  leader_name_hi?: string;
+  leader_name_en?: string;
+  leader_title_hi?: string;
+  leader_title_en?: string;
+  leader_bio_hi?: string;
+  leader_bio_en?: string;
+  youtube_channel_url?: string;
+  whatsapp_number?: string;
+  whatsapp_group_url?: string;
+  telegram_group_url?: string;
+  contact_email?: string;
+  contact_phone?: string;
+  office_address?: string;
 }

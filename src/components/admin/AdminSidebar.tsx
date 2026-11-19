@@ -15,7 +15,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Shield,
-  Sparkles
+  Sparkles,
+  Youtube
 } from 'lucide-react';
 
 export default function AdminSidebar() {
@@ -25,11 +26,12 @@ export default function AdminSidebar() {
   const menuItems = [
     { href: '/admin', label: 'Overview', icon: LayoutDashboard },
     { href: '/admin/analytics', label: 'Analytics Dashboard', icon: BarChart3 },
+    { href: '/admin/videos', label: 'Videos & YouTube', icon: Youtube, badge: 'Media' },
     { href: '/admin/news', label: 'News Briefings & AI', icon: Newspaper, badge: 'AI Hub' },
     { href: '/admin/campaigns', label: 'Campaigns', icon: Megaphone },
     { href: '/admin/blogs', label: 'Blogs & Articles', icon: FileText },
     { href: '/admin/volunteers', label: 'Volunteers', icon: Users },
-    { href: '/admin/settings', label: 'Settings & AI Keys', icon: Settings },
+    { href: '/admin/settings', label: 'Settings & Profile', icon: Settings },
   ];
 
   const isActive = (href: string) => {

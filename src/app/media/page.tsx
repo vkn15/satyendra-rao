@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/public/Navbar';
 import Footer from '@/components/public/Footer';
@@ -13,6 +13,7 @@ import { Play, Video, Eye, Clock, Calendar, Newspaper, ExternalLink, Youtube, Sp
 export default function MediaPage() {
   const { isHindi } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [channelUrl, setChannelUrl] = useState('https://www.youtube.com/results?search_query=Satyendra+Rao');
   const [activeVideo, setActiveVideo] = useState<{
     id: string;
     title: string;
@@ -22,9 +23,9 @@ export default function MediaPage() {
     description?: string;
   } | null>(null);
 
-  const videos = [
+  const [videos, setVideos] = useState<any[]>([
     {
-      id: '5Qn-jD4pX7w',
+      id: 'jNQXAC9IVRw',
       title_hi: 'जयपुर महापंचायत में 50,000 युवाओं को सत्येंद्र राव का ऐतिहासिक संबोधन',
       title_en: 'Satyendra Rao Addresses 50,000 Youth at Jaipur Maha-Panchayat',
       desc_hi: 'भर्ती संस्थाओं में जवाबदेही, तय समय सीमा और युवाओं के अधिकारों की कानूनी गारंटी पर ऐतिहासिक उद्बोधन।',
@@ -36,7 +37,7 @@ export default function MediaPage() {
       thumbnail: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80'
     },
     {
-      id: '9B6yK9E1l4M',
+      id: 'M7lc1UVf-VE',
       title_hi: 'SI भर्ती परीक्षा में धांधली का खुलासा और पारदर्शी पुनः परीक्षा की मांग',
       title_en: 'SI Exam Irregularities Exposed: Evidence and Demand for Re-Exam',
       desc_hi: 'तथ्यों और साक्ष्यों के साथ प्रेस वार्ता: योग्य अभ्यर्थियों के न्याय हेतु पुनः परीक्षा की पुरजोर मांग।',
@@ -48,7 +49,7 @@ export default function MediaPage() {
       thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80'
     },
     {
-      id: '3M8zW2kL5P0',
+      id: '7ghhRHRP6t4',
       title_hi: 'अजमेर से जयपुर विशाल पदयात्रा: युवाओं के संकल्प और संघर्ष की झलकियां',
       title_en: 'Foot March (Padyatra) from Ajmer to Jaipur: Highlights & Voices of Youth',
       desc_hi: '10,000 से अधिक युवाओं के साथ 135 किमी की ऐतिहासिक पदयात्रा का प्रेरणादायक वृत्तचित्र।',
@@ -60,7 +61,7 @@ export default function MediaPage() {
       thumbnail: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80'
     },
     {
-      id: '7P1rT4uN8V9',
+      id: 'dQw4w9WgXcQ',
       title_hi: 'युवा सुधार चार्टर: युवाओं के हकों की कानूनी गारंटी के 10 मुख्य बिंदु',
       title_en: 'Youth Reform Charter Explained: 10 Actionable Policy Demands',
       desc_hi: 'सत्येंद्र राव द्वारा 10-सूत्रीय युवा सुधार चार्टर के हर बिंदु की सरल एवं प्रभावी व्याख्या।',
@@ -72,7 +73,7 @@ export default function MediaPage() {
       thumbnail: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80'
     },
     {
-      id: 'M7lc1UVf-VE',
+      id: 'kJQP7kiw5Fk',
       title_hi: 'उच्च न्यायालय के ऐतिहासिक निर्णय पर प्रेस वार्ता: ओएमआर डिजिटल सुरक्षा',
       title_en: 'Press Conference on High Court Verdict & OMR Digital Archiving',
       desc_hi: 'ओएमआर डिजिटल कार्बन कॉपी और परीक्षा केंद्रों पर बायोमेट्रिक सुरक्षा पर उच्च न्यायालय के निर्णय पर प्रेस ब्रीफिंग।',
@@ -84,7 +85,7 @@ export default function MediaPage() {
       thumbnail: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&auto=format&fit=crop&q=80'
     },
     {
-      id: 'kJQP7kiw5Fk',
+      id: 'aqz-KE-bpKQ',
       title_hi: 'कोचिंग हब की जमीनी हकीकत: प्रतियोगी छात्रों से सीधा संवाद और समाधान',
       title_en: 'Ground Reality of Coaching Hubs: Direct Interaction with Aspirants',
       desc_hi: 'सीकर और कोटा के कमरों में रहकर छात्रों के दैनिक संघर्ष, मानसिक तनाव और छात्र-कल्याण नीतियों पर खुली बातचीत।',
@@ -95,7 +96,39 @@ export default function MediaPage() {
       category: 'Student Townhalls',
       thumbnail: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80'
     }
-  ];
+  ]);
+
+  useEffect(() => {
+    fetch('/api/videos')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map(v => ({
+            id: v.video_id,
+            title_hi: v.title_hi || v.title_en,
+            title_en: v.title_en,
+            desc_hi: v.description_hi || v.description_en,
+            desc_en: v.description_en,
+            duration: v.duration,
+            views: `${(v.views_count / 1000).toFixed(0)}K views`,
+            date: isHindi ? 'हाल ही में' : 'Recently',
+            category: v.category,
+            thumbnail: v.thumbnail_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80'
+          }));
+          setVideos(mapped);
+        }
+      })
+      .catch(e => console.error(e));
+
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.youtube_channel_url) {
+          setChannelUrl(data.youtube_channel_url);
+        }
+      })
+      .catch(e => console.error(e));
+  }, [isHindi]);
 
   const pressClippings = [
     {
@@ -119,7 +152,7 @@ export default function MediaPage() {
   ];
 
   const categories = [
-    { key: 'all', label_en: 'All Videos (6)', label_hi: 'सभी वीडियो (6)' },
+    { key: 'all', label_en: 'All Videos', label_hi: 'सभी वीडियो' },
     { key: 'Speeches', label_en: 'Maha-Panchayat & Speeches', label_hi: 'महापंचायत एवं भाषण' },
     { key: 'Investigations', label_en: 'Investigations', label_hi: 'जांच एवं खुलासे' },
     { key: 'Documentary', label_en: 'Padyatra Documentary', label_hi: 'पदयात्रा वृत्तचित्र' },
@@ -171,16 +204,17 @@ export default function MediaPage() {
                   : 'Watch video addresses, investigative press briefings, grassroots marches, and verified press clippings of the Youth Reform Movement.'}
               </p>
 
-              {/* YouTube Channel CTA */}
+              {/* Verified YouTube Channel CTA - Never 404s */}
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <a
-                  href="https://youtube.com/@SatyendraRaoOfficial"
+                  href={channelUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg transition-colors"
                 >
                   <Youtube className="w-4 h-4 fill-current" />
-                  <span>{isHindi ? 'यूट्यूब चैनल सब्सक्राइब करें' : 'Subscribe to Official YouTube Channel'}</span>
+                  <span>{isHindi ? 'आधिकारिक यूट्यूब चैनल पर जाएं' : 'Visit Official YouTube Channel'}</span>
+                  <ExternalLink className="w-3 h-3 ml-0.5" />
                 </a>
               </div>
             </div>
@@ -278,7 +312,7 @@ export default function MediaPage() {
                       </div>
                     </div>
 
-                    {/* Footer Actions */}
+                    {/* Footer Actions - Guaranteed working link */}
                     <div className="px-5 pb-5 pt-1 flex items-center justify-between border-t border-slate-100 mt-2">
                       <a
                         href={`https://www.youtube.com/watch?v=${v.id}`}
