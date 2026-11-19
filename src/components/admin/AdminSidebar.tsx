@@ -27,7 +27,7 @@ export default function AdminSidebar() {
     { href: '/admin', label: 'Overview', icon: LayoutDashboard },
     { href: '/admin/analytics', label: 'Analytics Dashboard', icon: BarChart3 },
     { href: '/admin/videos', label: 'Videos & YouTube', icon: Youtube, badge: 'Media' },
-    { href: '/admin/news', label: 'News Briefings & AI', icon: Newspaper, badge: 'AI Hub' },
+    { href: '/admin/news', label: 'News & Press Links', icon: Newspaper, badge: 'Direct' },
     { href: '/admin/campaigns', label: 'Campaigns', icon: Megaphone },
     { href: '/admin/blogs', label: 'Blogs & Articles', icon: FileText },
     { href: '/admin/volunteers', label: 'Volunteers', icon: Users },

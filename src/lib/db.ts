@@ -345,6 +345,17 @@ export async function updateNewsBrief(id: string, updates: Partial<NewsBrief>): 
   return db.news_briefs[index];
 }
 
+export async function deleteNewsBrief(id: string): Promise<boolean> {
+  const db = getDatabase();
+  const initialCount = db.news_briefs.length;
+  db.news_briefs = db.news_briefs.filter(n => n.id !== id);
+  if (db.news_briefs.length !== initialCount) {
+    saveDatabase(db);
+    return true;
+  }
+  return false;
+}
+
 export async function incrementNewsViews(id: string): Promise<void> {
   const db = getDatabase();
   const brief = db.news_briefs.find(n => n.id === id);

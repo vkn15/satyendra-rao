@@ -79,17 +79,17 @@ export const translations = {
     impactMetric5Value: '1 लाख+',
     impactMetric5Label: 'सक्रिय समर्थक',
 
-    // News Briefing
-    newsHeading: 'दैनिक समाचार एवं नीतिगत बुलेटिन',
-    newsSubtitle: 'भर्ती परीक्षाओं, न्यायालयीन निर्णयों और युवा नीति पर एआई-समीक्षित प्रामाणिक अपडेट',
+    // News & Press Links
+    newsHeading: 'दैनिक समाचार एवं मीडिया कवरेज',
+    newsSubtitle: 'भर्ती परीक्षाओं, न्यायालयीन निर्णयों और युवा नीति पर प्रमुख समाचार पत्रों व मीडिया की सीधी रिपोर्ट्स',
     newsCategoryAll: 'सभी विषय',
     newsImportanceAll: 'सभी प्राथमिकता',
     newsImportanceCritical: 'अति महत्वपूर्ण',
     newsImportanceHigh: 'उच्च प्राथमिकता',
     newsImportanceMedium: 'सामान्य सूचना',
-    newsApprovedBadge: 'सत्यापित विवरण',
-    newsAiBadge: 'एआई सारांश',
-    newsSearchPlaceholder: 'समाचार, आयोग या विषय खोजें...',
+    newsApprovedBadge: 'सत्यापित स्रोत',
+    newsDirectBadge: 'सीधा समाचार लिंक',
+    newsSearchPlaceholder: 'समाचार, अखबार या विषय खोजें...',
     newsSaved: 'सुरक्षित किया गया',
     newsSave: 'सुरक्षित करें',
 
@@ -194,17 +194,17 @@ export const translations = {
     impactMetric5Value: '100K+',
     impactMetric5Label: 'Active Supporters',
 
-    // News Briefing
-    newsHeading: 'Daily News Briefing & Policy Updates',
-    newsSubtitle: 'AI-summarized, verified policy updates on recruitment exams, judicial rulings, and youth advocacy',
+    // News & Press Links
+    newsHeading: 'Daily News & Media Coverage',
+    newsSubtitle: 'Direct press reports, judicial updates, and exam reform headlines from leading newspapers',
     newsCategoryAll: 'All Categories',
     newsImportanceAll: 'All Importance',
     newsImportanceCritical: 'Critical / Urgent',
     newsImportanceHigh: 'High Priority',
     newsImportanceMedium: 'General Update',
-    newsApprovedBadge: 'Verified Update',
-    newsAiBadge: 'AI Summary',
-    newsSearchPlaceholder: 'Search news, commission, or keywords...',
+    newsApprovedBadge: 'Verified Source',
+    newsDirectBadge: 'Direct News Link',
+    newsSearchPlaceholder: 'Search news, publication, or keywords...',
     newsSaved: 'Saved',
     newsSave: 'Save',
 

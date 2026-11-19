@@ -16,6 +16,7 @@ export const dynamic = 'force-dynamic';
 export default function HomePage() {
   const db = getDatabase();
   const initialBlogs = db.blogs?.slice(0, 3) || [];
+  const initialNews = (db.news_briefs || []).filter(n => n.status === 'published').slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -33,8 +34,8 @@ export default function HomePage() {
         {/* 5 Impact Metrics with Rajasthan Silhouette */}
         <ImpactRibbon />
 
-        {/* AI-Powered Daily News Highlights */}
-        <HomeLatestNews />
+        {/* Latest News & Direct Press Coverage */}
+        <HomeLatestNews initialNews={initialNews} />
 
         {/* Video Speeches & Ground Rallies (Shadcn UI Video Strip) */}
         <HomeMediaSection />

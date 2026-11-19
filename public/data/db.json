@@ -74589,6 +74589,266 @@
       "language": "hi",
       "id": "pv-1795121736275-0p5hr",
       "created_at": "2026-11-19T20:55:36.275Z"
+    },
+    {
+      "path": "/",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_v2s84zq5mwo2ovjg",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124352948-nad8f",
+      "created_at": "2026-11-19T21:39:12.948Z"
+    },
+    {
+      "path": "/admin",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_v2s84zq5mwo2ovjg",
+      "referrer": "http://localhost:3000/",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124357058-wv1qu",
+      "created_at": "2026-11-19T21:39:17.058Z"
+    },
+    {
+      "path": "/media",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_c6td5y0qmwo2peci",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124377325-oqvjb",
+      "created_at": "2026-11-19T21:39:37.325Z"
+    },
+    {
+      "path": "/admin/videos",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124407166-31aje",
+      "created_at": "2026-11-19T21:40:07.166Z"
+    },
+    {
+      "path": "/admin/news",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/videos",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124454225-v5eoh",
+      "created_at": "2026-11-19T21:40:54.225Z"
+    },
+    {
+      "path": "/admin/campaigns",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/news",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124466064-7u6tz",
+      "created_at": "2026-11-19T21:41:06.064Z"
+    },
+    {
+      "path": "/admin/blogs",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/campaigns",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124467879-ftxhy",
+      "created_at": "2026-11-19T21:41:07.879Z"
+    },
+    {
+      "path": "/admin/volunteers",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/blogs",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124512281-5h382",
+      "created_at": "2026-11-19T21:41:52.281Z"
+    },
+    {
+      "path": "/admin/settings",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/volunteers",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124517144-bi0yo",
+      "created_at": "2026-11-19T21:41:57.144Z"
+    },
+    {
+      "path": "/admin",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/volunteers",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124541581-urk7i",
+      "created_at": "2026-11-19T21:42:21.581Z"
+    },
+    {
+      "path": "/admin/news",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124551278-2ocjr",
+      "created_at": "2026-11-19T21:42:31.278Z"
+    },
+    {
+      "path": "/admin/news",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/news",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124564660-1qk74",
+      "created_at": "2026-11-19T21:42:44.660Z"
+    },
+    {
+      "path": "/admin/videos",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/news",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124578930-8q094",
+      "created_at": "2026-11-19T21:42:58.930Z"
+    },
+    {
+      "path": "/admin/analytics",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/videos",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124580253-1hgra",
+      "created_at": "2026-11-19T21:43:00.253Z"
+    },
+    {
+      "path": "/admin",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/volunteers",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124583275-q7ep0",
+      "created_at": "2026-11-19T21:43:03.275Z"
+    },
+    {
+      "path": "/admin/volunteers",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/blogs",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124585134-4gto0",
+      "created_at": "2026-11-19T21:43:05.134Z"
+    },
+    {
+      "path": "/admin/blogs",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/campaigns",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124585573-wjly9",
+      "created_at": "2026-11-19T21:43:05.573Z"
+    },
+    {
+      "path": "/admin/campaigns",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/news",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124586019-qd5ds",
+      "created_at": "2026-11-19T21:43:06.019Z"
+    },
+    {
+      "path": "/admin/news",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "http://localhost:3000/admin/videos",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124586616-ifxt2",
+      "created_at": "2026-11-19T21:43:06.616Z"
+    },
+    {
+      "path": "/admin/videos",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_u8jup3qpmwo2q1dk",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795124587029-dctr3",
+      "created_at": "2026-11-19T21:43:07.029Z"
+    },
+    {
+      "path": "/blog",
+      "visitor_id": "test-visitor-202",
+      "session_id": "test-session-202",
+      "user_agent": "node",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125058987-1bmlv",
+      "created_at": "2026-11-19T21:50:58.987Z"
+    },
+    {
+      "path": "/blog",
+      "visitor_id": "test-visitor-202",
+      "session_id": "test-session-202",
+      "user_agent": "node",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125163083-fkp56",
+      "created_at": "2026-11-19T21:52:43.083Z"
     }
   ],
   "analytics_events": [
@@ -106028,6 +106288,32 @@
         "Policy Research",
         "Youth Mobilization"
       ],
+      "id": "vol-1795125163218",
+      "status": "new",
+      "created_at": "2026-11-19T21:52:43.218Z"
+    },
+    {
+      "full_name": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "phone": "9876543210",
+      "district": "Jaipur",
+      "interests": [
+        "Policy Research",
+        "Youth Mobilization"
+      ],
+      "id": "vol-1795125059144",
+      "status": "new",
+      "created_at": "2026-11-19T21:50:59.144Z"
+    },
+    {
+      "full_name": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "phone": "9876543210",
+      "district": "Jaipur",
+      "interests": [
+        "Policy Research",
+        "Youth Mobilization"
+      ],
       "id": "vol-1795121736410",
       "status": "new",
       "created_at": "2026-11-19T20:55:36.410Z"
@@ -106162,19 +106448,6 @@
     }
   ],
   "youtube_videos": [
-    {
-      "id": "yt-1",
-      "video_id": "jNQXAC9IVRw",
-      "title_en": "Satyendra Rao Addresses 50,000 Youth at Jaipur Maha-Panchayat",
-      "title_hi": "जयपुर महापंचायत में 50,000 युवाओं को सत्येंद्र राव का ऐतिहासिक संबोधन",
-      "description_en": "A powerful address calling for immediate institutional accountability, time-bound recruitments, and legal guarantees for youth.",
-      "description_hi": "भर्ती संस्थाओं में जवाबदेही, तय समय सीमा और युवाओं के अधिकारों की कानूनी गारंटी पर ऐतिहासिक उद्बोधन।",
-      "thumbnail_url": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80",
-      "duration": "18:45",
-      "views_count": 142000,
-      "published_date": "2026-11-04T20:47:29.799Z",
-      "category": "Speeches"
-    },
     {
       "id": "yt-2",
       "video_id": "M7lc1UVf-VE",

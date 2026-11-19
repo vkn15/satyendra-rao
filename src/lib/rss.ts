@@ -1,6 +1,5 @@
 import Parser from 'rss-parser';
 import { getAppSettings, createNewsBrief, getNewsBriefs } from './db';
-import { summarizeNewsArticle } from './ai';
 
 const parser = new Parser({
   timeout: 10000,
@@ -53,33 +52,25 @@ export async function fetchAndSummarizeFeeds(): Promise<{
           continue; // Already processed
         }
 
-        // Summarize using AI
-        const summaryResult = await summarizeNewsArticle({
-          headline: item.title,
-          source: feed.name,
-          description: item.contentSnippet || item.content || item.summary || item.title,
-          publishedDate: item.isoDate || item.pubDate || new Date().toISOString(),
-          sourceUrl: item.link
-        });
+        // Direct news processing (no AI summarization required)
+        const rawDescription = item.contentSnippet || item.summary || item.content || item.title || '';
+        const cleanDesc = rawDescription.replace(/<[^>]*>?/gm, '').trim().slice(0, 320);
 
         const status = settings.require_admin_approval ? 'pending_review' : 'published';
 
         await createNewsBrief({
-          headline_en: summaryResult.headline_en,
-          headline_hi: summaryResult.headline_hi,
+          headline_en: item.title,
+          headline_hi: item.title,
           source: feed.name,
           source_url: item.link,
           published_date: item.isoDate || item.pubDate || new Date().toISOString(),
-          category: summaryResult.category,
-          importance: summaryResult.importance,
-          summary_en: summaryResult.summary_en,
-          summary_hi: summaryResult.summary_hi,
-          key_points_en: summaryResult.key_points_en,
-          key_points_hi: summaryResult.key_points_hi,
+          category: 'Policy & Governance',
+          importance: 'medium',
+          summary_en: cleanDesc,
+          summary_hi: cleanDesc,
           status,
-          private_notes: `Auto-fetched from ${feed.name}. AI provider: ${summaryResult.ai_provider}.`,
-          ai_generated: true,
-          ai_provider: summaryResult.ai_provider,
+          private_notes: `Direct feed link from ${feed.name}`,
+          ai_generated: false,
           approved_at: status === 'published' ? new Date().toISOString() : undefined,
           approved_by: status === 'published' ? 'Auto Rule' : undefined
         });

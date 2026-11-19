@@ -43,7 +43,7 @@ export default function AdminOverviewPage() {
     <div className="flex-1 flex flex-col bg-slate-50 min-h-screen">
       <AdminHeader
         title="Movement Operations Overview"
-        subtitle="Live tracking telemetry, pending AI news summaries, and grassroots volunteers"
+        subtitle="Live tracking telemetry, press coverage links, and grassroots volunteers"
       />
 
       <main className="flex-1 p-6 sm:p-8 space-y-8 max-w-7xl w-full mx-auto">
@@ -99,34 +99,34 @@ export default function AdminOverviewPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-2">
             <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold uppercase tracking-wider">Pending AI Reviews</span>
+              <span className="text-xs font-bold uppercase tracking-wider">Pending News Queue</span>
               <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center">
-                <Sparkles className="w-4 h-4" />
+                <Clock className="w-4 h-4" />
               </div>
             </div>
             <div className="text-2xl font-black text-amber-700">
               {pendingNews.length}
             </div>
             <p className="text-xs text-amber-800 font-semibold">
-              Awaiting admin verification
+              Awaiting publication review
             </p>
           </div>
 
         </div>
 
-        {/* 2 Column Row: Pending AI News Reviews & Recent Volunteers */}
+        {/* 2 Column Row: Pending News Reviews & Recent Volunteers */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Pending AI News Summaries */}
+          {/* Pending News Queue */}
           <div className="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-navy-900 flex items-center gap-2">
                   <Clock className="w-4 h-4 text-amber-500" />
-                  <span>Pending AI News Review Queue</span>
+                  <span>Pending News Review Queue</span>
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Articles fetched and summarized by AI requiring verification
+                  New press reports awaiting verification and publishing
                 </p>
               </div>
 
@@ -134,14 +134,14 @@ export default function AdminOverviewPage() {
                 href="/admin/news"
                 className="text-xs font-bold text-purple-900 hover:underline flex items-center gap-1"
               >
-                <span>Full Review Hub</span>
+                <span>Full News Hub</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </a>
             </div>
 
             {pendingNews.length === 0 ? (
               <div className="py-8 text-center text-xs text-slate-500 bg-slate-50 rounded-xl">
-                All AI news briefings are reviewed and up to date!
+                All news articles are reviewed and published!
               </div>
             ) : (
               <div className="space-y-3">

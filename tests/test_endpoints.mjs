@@ -193,6 +193,52 @@ async function runTests() {
     return `Volunteer registered with ID: ${reg.id}`;
   });
 
+  // 8e. Direct News Links & Removed AI Summarization Verification
+  await check('Direct News Links on /news (Clean Press Links, No AI Summarization)', async () => {
+    const res = await fetch(`${BASE_URL}/news`);
+    if (!res.ok) throw new Error(`GET /news returned ${res.status}`);
+    const html = await res.text();
+    // Check that direct links to real sources are present
+    if (!html.includes('https://www.bhaskar.com/rajasthan/news')) {
+      throw new Error('Missing direct news source link on /news');
+    }
+    // Verify AI summarization labels are removed
+    if (html.includes('AI-Powered Daily News Briefing') || html.includes('एआई-संचालित दैनिक समाचार बुलेटिन')) {
+      throw new Error('AI summarization badge still present in /news markup');
+    }
+    if (html.includes('AI Verified Summary') || html.includes('AI Policy Brief')) {
+      throw new Error('AI summary badges still present in /news markup');
+    }
+    return 'Verified: Direct news links active, AI summarization removed from news cards';
+  });
+
+  // 8f. News API Direct Link CRUD (POST & DELETE)
+  await check('News API Direct Link CRUD (POST & DELETE /api/news)', async () => {
+    const postRes = await fetch(`${BASE_URL}/api/news`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        headline_en: 'Direct Test News Article from Press Trust',
+        headline_hi: 'प्रेस ट्रस्ट से सीधा परीक्षण समाचार',
+        source: 'Press Trust of India',
+        source_url: 'https://www.ptinews.com/story/national/test-news',
+        category: 'Policy & Governance',
+        importance: 'medium',
+        summary_en: 'Direct press report regarding exam reforms and fast-track tribunals.',
+        summary_hi: 'परीक्षा सुधारों और फास्ट-ट्रैक अदालतों के संबंध में सीधी प्रेस रिपोर्ट।',
+        status: 'published'
+      })
+    });
+    if (!postRes.ok) throw new Error(`POST /api/news returned ${postRes.status}`);
+    const created = await postRes.json();
+    if (!created.id) throw new Error('Created news missing ID');
+
+    // Delete test article
+    const delRes = await fetch(`${BASE_URL}/api/news?id=${created.id}`, { method: 'DELETE' });
+    if (!delRes.ok) throw new Error(`DELETE /api/news returned ${delRes.status}`);
+    return `News API CRUD functional: successfully created direct news link and cleaned up`;
+  });
+
   // 9. AI Summarize API
   await check('AI Summarize API (POST /api/ai/summarize)', async () => {
     const res = await fetch(`${BASE_URL}/api/ai/summarize`, {

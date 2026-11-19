@@ -6,7 +6,7 @@ import { useToast } from '@/context/ToastContext';
 import { trackEvent } from '@/components/shared/AnalyticsTracker';
 import { NewsBrief } from '@/types';
 import { 
-  Sparkles, 
+  Newspaper, 
   ExternalLink, 
   Bookmark, 
   BookmarkCheck, 
@@ -14,14 +14,15 @@ import {
   Calendar, 
   ArrowRight,
   ShieldCheck,
-  Languages
+  Languages,
+  Link2
 } from 'lucide-react';
 
-export default function HomeLatestNews() {
+export default function HomeLatestNews({ initialNews = [] }: { initialNews?: NewsBrief[] }) {
   const { t, isHindi } = useLanguage();
   const { showToast } = useToast();
-  const [news, setNews] = useState<NewsBrief[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [news, setNews] = useState<NewsBrief[]>(initialNews);
+  const [loading, setLoading] = useState(initialNews.length === 0);
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [importantIds, setImportantIds] = useState<Set<string>>(new Set());
   const [langPreference, setLangPreference] = useState<'both' | 'hi' | 'en'>('both');
@@ -92,8 +93,8 @@ export default function HomeLatestNews() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-bold uppercase tracking-wider mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-accent-gold" />
-              <span>{isHindi ? 'एआई-संचालित दैनिक बुलेटिन' : 'AI-Powered Daily Briefing'}</span>
+              <Newspaper className="w-3.5 h-3.5 text-purple-800" />
+              <span>{isHindi ? 'दैनिक समाचार एवं मीडिया' : 'Latest News & Press'}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-navy-900 font-hindi">
               {t.newsHeading}
@@ -184,14 +185,29 @@ export default function HomeLatestNews() {
                     </div>
                   </div>
 
-                  {/* Headline */}
-                  <h3 className="text-base sm:text-[17px] font-bold text-navy-900 leading-snug hover:text-purple-900 transition-colors">
-                    {isHindi ? item.headline_hi : item.headline_en}
-                  </h3>
+                  {/* Direct Clickable Headline */}
+                  <a
+                    href={item.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleReadOriginal(item)}
+                    className="group/h inline-flex items-start gap-1.5 text-base sm:text-[17px] font-bold text-navy-900 leading-snug hover:text-purple-900 transition-colors font-hindi"
+                  >
+                    <span>{isHindi ? item.headline_hi : item.headline_en}</span>
+                    <ExternalLink className="w-4 h-4 text-purple-600 opacity-60 group-hover/h:opacity-100 shrink-0 mt-1 transition-opacity" />
+                  </a>
 
                   {/* Source indicator */}
-                  <div className="mt-1 flex items-center gap-2 text-xs text-purple-900/80 font-semibold">
-                    <span>स्रोत: {item.source}</span>
+                  <div className="mt-2 flex items-center gap-2 text-xs text-purple-900 font-semibold">
+                    <a
+                      href={item.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline flex items-center gap-1"
+                    >
+                      <span>{item.source}</span>
+                      <ExternalLink className="w-3 h-3 text-purple-600" />
+                    </a>
                     <span className="w-1 h-1 rounded-full bg-slate-300" />
                     <span className="inline-flex items-center gap-0.5 text-emerald-700 font-medium">
                       <ShieldCheck className="w-3 h-3" />
@@ -199,42 +215,49 @@ export default function HomeLatestNews() {
                     </span>
                   </div>
 
-                  {/* AI Summaries */}
-                  <div className="mt-4 space-y-3 text-xs sm:text-[13px] text-slate-700 leading-relaxed">
+                  {/* Direct News Excerpt (Clean, No AI Badges) */}
+                  <div className="mt-4 text-xs sm:text-[13px] text-slate-700 leading-relaxed font-hindi">
                     {(langPreference === 'both' || langPreference === 'hi') && (
-                      <div className="p-3 bg-purple-50/60 rounded-xl border border-purple-100/80 font-hindi">
-                        <span className="block text-[11px] font-bold text-purple-900 uppercase tracking-wider mb-1">
-                          हिन्दी सारांश (AI):
-                        </span>
-                        <p>{item.summary_hi}</p>
-                      </div>
+                      <p className="p-3 bg-purple-50/50 rounded-xl border border-purple-100/70">
+                        {item.summary_hi}
+                      </p>
                     )}
 
-                    {(langPreference === 'both' || langPreference === 'en') && (
-                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
-                        <span className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                          English Summary (AI):
-                        </span>
-                        <p>{item.summary_en}</p>
-                      </div>
+                    {(langPreference === 'both' || langPreference === 'en') && item.summary_en && (
+                      <p className="p-3 mt-2 bg-slate-50 rounded-xl border border-slate-200/70 font-sans">
+                        {item.summary_en}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 {/* Bottom Action Footer */}
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
                   <a
                     href={item.source_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => handleReadOriginal(item)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-900 hover:text-purple-950 px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-900 hover:bg-purple-950 px-3.5 py-2 rounded-xl transition-all shadow-xs"
                   >
-                    <span>{t.btnReadOriginal}</span>
+                    <span>{isHindi ? 'सीधे समाचार पढ़ें' : 'Read Direct News'}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
 
                   <div className="flex items-center gap-1.5">
+                    {/* Copy Direct Link */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigator.clipboard.writeText(item.source_url);
+                        showToast(isHindi ? 'सीधा लिंक कॉपी किया गया' : 'Direct link copied', 'info');
+                      }}
+                      title="Copy Direct Link"
+                      className="p-2 rounded-lg text-slate-400 hover:text-purple-900 hover:bg-purple-50 transition-colors"
+                    >
+                      <Link2 className="w-4 h-4" />
+                    </button>
+
                     {/* Mark as Important */}
                     <button
                       onClick={(e) => toggleImportant(item.id, e)}
