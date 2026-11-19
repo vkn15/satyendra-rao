@@ -100,10 +100,10 @@ export default function HeroSection() {
               <span className="block text-xs font-bold text-purple-900">में जवाबदेही हो</span>
             </div>
 
-            {/* Main Portrait Card with Satyendra Rao Real Image */}
+            {/* Main Portrait Card */}
             <div className="relative w-full max-w-[420px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-purple-800/40 bg-gradient-to-t from-purple-950 via-purple-900 to-purple-800 group">
               <Image
-                src="/images/satyendra_real.jpg"
+                src="/images/satyendra_rao_new.jpg"
                 alt="Satyendra Rao - Youth Reform Movement Leader"
                 fill
                 priority

@@ -156,6 +156,13 @@ export default function NewsPage() {
       <main className="flex-1 bg-slate-50/70 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
+          {/* E-Paper Header matching Newspaper Reference Screenshot */}
+          <div className="flex items-center justify-between border-y-2 border-slate-900 py-2 px-1 mb-8 text-[11px] font-mono tracking-widest text-slate-800 uppercase font-bold">
+            <span>{isHindi ? 'दैनिक ई-बुलेटिन • युवा संस्करण' : 'DAILY NEWS BRIEFING • E-PAPER EDITION'}</span>
+            <span className="hidden sm:inline font-sans">{new Date().toLocaleDateString(isHindi ? 'hi-IN' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <span>{isHindi ? 'अंक 1 • भर्ती सुधार' : 'VOL. I • RECRUITMENT REFORMS'}</span>
+          </div>
+
           {/* Header */}
           <div className="mb-10 text-center sm:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-bold uppercase tracking-wider mb-3">
