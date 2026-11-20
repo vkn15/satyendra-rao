@@ -180,6 +180,8 @@ create policy "Allow admin all access to campaigns" on public.campaigns for all 
 create policy "Allow admin all access to blogs" on public.blogs for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
 create policy "Allow admin all access to volunteers" on public.volunteers for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
 create policy "Allow admin all access to youtube_videos" on public.youtube_videos for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
+create policy "Allow admin all access to app_settings" on public.app_settings for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
+create policy "Allow public read app_settings" on public.app_settings for select using (true);
 -- 9. ADMIN ROLES & USERS TABLE
 create table if not exists public.admin_users (
   id uuid primary key references auth.users(id) on delete cascade,

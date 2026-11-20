@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { summarizeNewsArticle } from '@/lib/ai';
+import { requireAdmin } from '@/lib/serverAuth';
 
 export async function POST(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const body = await req.json();
     const { headline, source, description, publishedDate, sourceUrl } = body;
 

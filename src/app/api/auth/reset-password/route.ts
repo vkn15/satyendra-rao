@@ -14,26 +14,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (isSupabaseConfigured && supabase) {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://satyendra-rao.vercel.app';
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: `${siteUrl}/admin/login?reset=true`
-      });
-
-      if (error) {
-        return NextResponse.json({ error: error.message }, { status: 400 });
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: 'Password reset link sent to your email.'
-      });
+    if (!isSupabaseConfigured || !supabase) {
+      return NextResponse.json(
+        { error: 'Supabase authentication service is not configured on the server.' },
+        { status: 503 }
+      );
     }
 
-    // Supabase not configured in local environment
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://satyendra-rao.vercel.app';
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${siteUrl}/admin/login?reset=true`
+    });
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
     return NextResponse.json({
       success: true,
-      message: 'Password reset instructions have been triggered. For local development, update the ADMIN_PASSWORD environment variable in .env.local.'
+      message: 'Password reset link has been dispatched to your email address.'
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });

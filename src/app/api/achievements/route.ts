@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase, saveDatabase } from '@/lib/storage';
+import { requireAdmin } from '@/lib/serverAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -82,6 +83,9 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const body = await req.json();
     const db = getDatabase();
     if (!db.achievements) db.achievements = defaultAchievements;
@@ -109,6 +113,9 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const body = await req.json();
     const { id, ...updates } = body;
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
@@ -129,6 +136,9 @@ export async function PATCH(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });

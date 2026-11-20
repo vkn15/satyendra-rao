@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAnalyticsStats } from '@/lib/db';
+import { requireAdmin } from '@/lib/serverAuth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const { searchParams } = new URL(req.url);
     const range = (searchParams.get('range') || '30d') as any;
     const from = searchParams.get('from') || undefined;

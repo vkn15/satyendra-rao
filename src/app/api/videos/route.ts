@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase, saveDatabase } from '@/lib/storage';
 import { YouTubeVideo } from '@/types';
+import { requireAdmin } from '@/lib/serverAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,6 +45,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const body = await req.json();
     const db = getDatabase();
 
@@ -82,6 +86,9 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const body = await req.json();
     const { id, ...updates } = body;
 
@@ -117,6 +124,9 @@ export async function PATCH(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 

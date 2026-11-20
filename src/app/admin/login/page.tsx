@@ -38,8 +38,6 @@ function AdminLoginForm() {
   const [resetMessage, setResetMessage] = useState<string | null>(null);
   const [resetError, setResetError] = useState<string | null>(null);
 
-  const [showCredGuide, setShowCredGuide] = useState(false);
-
   // Check if session already exists
   useEffect(() => {
     fetch('/api/auth/session')
@@ -172,7 +170,7 @@ function AdminLoginForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@satyendrarao.in"
+                  placeholder="admin@example.com"
                   className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-navy-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-700 focus:bg-white transition-all"
                 />
               </div>
@@ -247,33 +245,10 @@ function AdminLoginForm() {
             </button>
           </form>
 
-          {/* Quick Credential Guide toggle */}
-          <div className="mt-6 pt-5 border-t border-slate-100">
-            <button
-              type="button"
-              onClick={() => setShowCredGuide(!showCredGuide)}
-              className="w-full flex items-center justify-between text-xs text-purple-800 font-semibold hover:text-purple-950 py-1"
-            >
-              <span className="flex items-center gap-1.5">
-                <KeyRound className="w-3.5 h-3.5 text-accent-yellow" />
-                <span>Admin Login Instructions & Supabase Info</span>
-              </span>
-              <span>{showCredGuide ? '▲' : '▼'}</span>
-            </button>
-
-            {showCredGuide && (
-              <div className="mt-3 p-3.5 rounded-xl bg-purple-50/70 border border-purple-100 text-[11px] text-purple-950 space-y-2">
-                <p>
-                  <strong>Default Admin:</strong> <code className="bg-purple-100 px-1 py-0.5 rounded text-purple-900 font-mono">admin@satyendrarao.in</code>
-                </p>
-                <p>
-                  <strong>Default Password:</strong> <code className="bg-purple-100 px-1 py-0.5 rounded text-purple-900 font-mono">Satyendra@2026</code>
-                </p>
-                <p className="text-slate-600 text-[10px] leading-relaxed pt-1 border-t border-purple-100">
-                  When you connect Supabase Auth with <code className="font-mono">NEXT_PUBLIC_SUPABASE_URL</code> in <code className="font-mono">.env.local</code>, any user added to Supabase Auth with the <code className="font-mono">super_admin</code> role can securely authenticate.
-                </p>
-              </div>
-            )}
+          {/* Security Notice */}
+          <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
+            <Lock className="w-3.5 h-3.5 text-purple-700 shrink-0" />
+            <span>Authorized administrator access only • Supabase Auth</span>
           </div>
         </div>
 
@@ -324,7 +299,7 @@ function AdminLoginForm() {
                   required
                   value={resetEmail}
                   onChange={(e) => setResetEmail(e.target.value)}
-                  placeholder="admin@satyendrarao.in"
+                  placeholder="admin@example.com"
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-navy-900 focus:outline-none focus:ring-2 focus:ring-purple-700"
                 />
               </div>

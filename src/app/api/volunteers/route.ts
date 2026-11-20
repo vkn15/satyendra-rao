@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getVolunteers, createVolunteer, updateVolunteerStatus } from '@/lib/db';
+import { requireAdmin } from '@/lib/serverAuth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status') || undefined;
     const district = searchParams.get('district') || undefined;
@@ -34,6 +38,9 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
+    const authError = await requireAdmin(req);
+    if (authError) return authError;
+
     const body = await req.json();
     const { id, status, notes } = body;
     if (!id || !status) return NextResponse.json({ error: 'ID and status required' }, { status: 400 });
