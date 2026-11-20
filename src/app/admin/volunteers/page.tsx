@@ -4,7 +4,21 @@ import React, { useEffect, useState } from 'react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import { useToast } from '@/context/ToastContext';
 import { Volunteer } from '@/types';
-import { Users, Search, Filter, Phone, Mail, MapPin, CheckCircle2, Clock, XCircle, FileEdit } from 'lucide-react';
+import { 
+  Users, 
+  Search, 
+  Filter, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  CheckCircle2, 
+  Clock, 
+  XCircle, 
+  FileEdit, 
+  Download,
+  Calendar,
+  Briefcase
+} from 'lucide-react';
 
 export default function AdminVolunteersPage() {
   const { showToast } = useToast();
@@ -12,6 +26,7 @@ export default function AdminVolunteersPage() {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('all');
   const [districtFilter, setDistrictFilter] = useState('all');
+  const [roleFilter, setRoleFilter] = useState('all');
   const [search, setSearch] = useState('');
 
   const [editingVol, setEditingVol] = useState<Volunteer | null>(null);
@@ -62,28 +77,81 @@ export default function AdminVolunteersPage() {
     }
   };
 
-  const filtered = volunteers.filter(v => {
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        v.full_name.toLowerCase().includes(q) ||
-        v.phone.toLowerCase().includes(q) ||
-        v.district.toLowerCase().includes(q) ||
-        v.email.toLowerCase().includes(q)
-      );
+  const handleExportCSV = () => {
+    if (volunteers.length === 0) {
+      showToast('No volunteer records to export', 'error');
+      return;
     }
-    return true;
+
+    const headers = ['ID', 'Full Name', 'Phone', 'Email', 'District', 'State', 'Occupation', 'Preferred Role', 'Status', 'Registered Date', 'Notes'];
+    const rows = filtered.map(v => [
+      `"${v.id}"`,
+      `"${v.full_name.replace(/"/g, '""')}"`,
+      `"${v.phone}"`,
+      `"${v.email}"`,
+      `"${v.district}"`,
+      `"${v.state}"`,
+      `"${(v.occupation || '').replace(/"/g, '""')}"`,
+      `"${(v.preferred_role || '').replace(/"/g, '""')}"`,
+      `"${v.status}"`,
+      `"${new Date(v.created_at).toISOString().split('T')[0]}"`,
+      `"${(v.notes || '').replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `volunteers_satyendra_rao_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Volunteer data exported to CSV successfully!', 'success');
+  };
+
+  const filtered = volunteers.filter(v => {
+    const q = search.toLowerCase().trim();
+    const matchesSearch = !q || (
+      v.full_name?.toLowerCase().includes(q) ||
+      v.phone?.toLowerCase().includes(q) ||
+      v.district?.toLowerCase().includes(q) ||
+      v.email?.toLowerCase().includes(q)
+    );
+
+    const matchesRole = roleFilter === 'all' || v.preferred_role === roleFilter;
+
+    return matchesSearch && matchesRole;
   });
 
   const districts = [
-    'Jaipur', 'Jodhpur', 'Kota', 'Udaipur', 'Bikaner', 'Ajmer', 'Sikar', 'Alwar'
+    'Jaipur', 'Jodhpur', 'Kota', 'Udaipur', 'Bikaner', 'Ajmer', 'Sikar', 'Alwar', 'Bharatpur', 'Jhunjhunu', 'Nagaur', 'Churu', 'Pali', 'Barmer', 'Bhilwara'
+  ];
+
+  const roles = [
+    'District Coordinator',
+    'College Campus Mobilizer',
+    'Legal & RTI Research',
+    'Social Media & Digital Campaigner',
+    'Event Volunteer',
+    'General Volunteer'
   ];
 
   return (
     <div className="flex-1 flex flex-col bg-slate-50 min-h-screen">
       <AdminHeader
         title="Volunteer Mobilization Network"
-        subtitle="Manage youth coordinators, college mobilizers and legal research volunteers"
+        subtitle="Manage grassroots youth coordinators, college mobilizers and legal research volunteers"
+        actions={
+          <button
+            onClick={handleExportCSV}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-900 hover:bg-purple-800 text-white font-bold text-xs shadow-sm transition-colors cursor-pointer"
+            title="Download full volunteer database as CSV"
+          >
+            <Download className="w-3.5 h-3.5 text-accent-yellow" />
+            <span>Export CSV</span>
+          </button>
+        }
       />
 
       <main className="flex-1 p-6 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
@@ -115,6 +183,18 @@ export default function AdminVolunteersPage() {
                 <option key={d} value={d}>{d}</option>
               ))}
             </select>
+
+            {/* Role Filter */}
+            <select
+              value={roleFilter}
+              onChange={e => setRoleFilter(e.target.value)}
+              className="p-2 rounded-xl border border-slate-200 text-xs font-semibold bg-white"
+            >
+              <option value="all">All Roles</option>
+              {roles.map(r => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
           </div>
 
           <div className="relative w-full md:w-72">
@@ -123,7 +203,7 @@ export default function AdminVolunteersPage() {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search volunteer name, phone..."
+              placeholder="Search by name, phone, district..."
               className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-purple-700"
             />
           </div>
@@ -144,67 +224,81 @@ export default function AdminVolunteersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {filtered.map(v => (
-                  <tr key={v.id} className="hover:bg-slate-50/60">
-                    <td className="py-3.5 px-4">
-                      <div className="font-bold text-navy-900 text-sm">{v.full_name}</div>
-                      <div className="text-[11px] text-slate-400">
-                        Registered: {new Date(v.created_at).toLocaleDateString()}
-                      </div>
-                    </td>
-
-                    <td className="py-3.5 px-4 space-y-0.5">
-                      <div className="flex items-center gap-1.5 text-slate-700 font-medium">
-                        <Phone className="w-3 h-3 text-purple-700" />
-                        <span>{v.phone}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
-                        <Mail className="w-3 h-3 text-slate-400" />
-                        <span>{v.email}</span>
-                      </div>
-                    </td>
-
-                    <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-1 font-semibold text-slate-700">
-                        <MapPin className="w-3 h-3 text-accent-gold" />
-                        <span>{v.district}, {v.state}</span>
-                      </div>
-                    </td>
-
-                    <td className="py-3.5 px-4">
-                      <div className="font-bold text-purple-900">{v.preferred_role}</div>
-                      <div className="text-slate-500 text-[11px]">{v.occupation || 'Student'}</div>
-                    </td>
-
-                    <td className="py-3.5 px-4">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                        v.status === 'active'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : v.status === 'contacted'
-                          ? 'bg-blue-100 text-blue-800'
-                          : v.status === 'on_hold'
-                          ? 'bg-slate-100 text-slate-700'
-                          : 'bg-amber-100 text-amber-900'
-                      }`}>
-                        {v.status}
-                      </span>
-                    </td>
-
-                    <td className="py-3.5 px-4 text-right">
-                      <button
-                        onClick={() => {
-                          setEditingVol(v);
-                          setTempStatus(v.status);
-                          setTempNotes(v.notes || '');
-                        }}
-                        className="p-1.5 rounded-lg border border-slate-200 text-purple-900 hover:bg-purple-50 font-bold"
-                        title="Update Status / Notes"
-                      >
-                        <FileEdit className="w-3.5 h-3.5" />
-                      </button>
+                {loading ? (
+                  <tr>
+                    <td colSpan={6} className="py-12 text-center text-slate-400">
+                      <div className="w-6 h-6 border-2 border-purple-800 border-t-transparent rounded-full animate-spin mx-auto" />
                     </td>
                   </tr>
-                ))}
+                ) : filtered.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="py-12 text-center text-slate-500">
+                      No volunteers match the selected filter criteria.
+                    </td>
+                  </tr>
+                ) : (
+                  filtered.map(v => (
+                    <tr key={v.id} className="hover:bg-slate-50/60 transition-colors">
+                      <td className="py-3.5 px-4">
+                        <div className="font-bold text-navy-900 text-sm">{v.full_name}</div>
+                        <div className="text-[11px] text-slate-400">
+                          Registered: {new Date(v.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </div>
+                      </td>
+
+                      <td className="py-3.5 px-4 space-y-0.5">
+                        <div className="flex items-center gap-1.5 text-slate-700 font-medium font-mono">
+                          <Phone className="w-3 h-3 text-purple-700 shrink-0" />
+                          <span>{v.phone}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
+                          <Mail className="w-3 h-3 text-slate-400 shrink-0" />
+                          <span className="truncate max-w-[140px]">{v.email}</span>
+                        </div>
+                      </td>
+
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-1 font-semibold text-slate-700">
+                          <MapPin className="w-3 h-3 text-accent-yellow shrink-0" />
+                          <span>{v.district}, {v.state}</span>
+                        </div>
+                      </td>
+
+                      <td className="py-3.5 px-4">
+                        <div className="font-bold text-purple-900">{v.preferred_role}</div>
+                        <div className="text-slate-500 text-[11px]">{v.occupation || 'Student'}</div>
+                      </td>
+
+                      <td className="py-3.5 px-4">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                          v.status === 'active'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : v.status === 'contacted'
+                            ? 'bg-blue-100 text-blue-800'
+                            : v.status === 'on_hold'
+                            ? 'bg-slate-100 text-slate-700'
+                            : 'bg-amber-100 text-amber-900'
+                        }`}>
+                          {v.status}
+                        </span>
+                      </td>
+
+                      <td className="py-3.5 px-4 text-right">
+                        <button
+                          onClick={() => {
+                            setEditingVol(v);
+                            setTempStatus(v.status);
+                            setTempNotes(v.notes || '');
+                          }}
+                          className="p-1.5 rounded-lg border border-slate-200 text-purple-900 hover:bg-purple-50 font-bold transition-colors cursor-pointer"
+                          title="Update Status / Notes"
+                        >
+                          <FileEdit className="w-3.5 h-3.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -214,13 +308,13 @@ export default function AdminVolunteersPage() {
 
       {/* Update Volunteer Modal */}
       {editingVol && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-purple-200 space-y-4 text-xs">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/70 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-purple-200 space-y-4 text-xs">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <h3 className="text-sm font-bold text-navy-900">
                 Update Volunteer: {editingVol.full_name}
               </h3>
-              <button onClick={() => setEditingVol(null)} className="text-slate-400 hover:text-slate-700">
+              <button onClick={() => setEditingVol(null)} className="text-slate-400 hover:text-slate-700 cursor-pointer">
                 <XCircle className="w-4 h-4" />
               </button>
             </div>
@@ -254,14 +348,14 @@ export default function AdminVolunteersPage() {
               <button
                 type="button"
                 onClick={() => setEditingVol(null)}
-                className="px-4 py-2 rounded-xl bg-slate-100 font-bold"
+                className="px-4 py-2 rounded-xl bg-slate-100 font-bold cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleUpdateStatus}
-                className="px-5 py-2 rounded-xl bg-purple-900 text-white font-bold hover:bg-purple-950"
+                className="px-5 py-2 rounded-xl bg-purple-900 text-white font-bold hover:bg-purple-950 cursor-pointer"
               >
                 Save
               </button>

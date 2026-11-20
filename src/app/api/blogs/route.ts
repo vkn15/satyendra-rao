@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getBlogs, createBlog, updateBlog } from '@/lib/db';
+import { getBlogs, createBlog, updateBlog, deleteBlog } from '@/lib/db';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
@@ -30,6 +32,21 @@ export async function PATCH(req: NextRequest) {
 
     const updated = await updateBlog(id, updates);
     return NextResponse.json(updated);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    if (!id) return NextResponse.json({ error: 'Blog ID or slug required' }, { status: 400 });
+
+    const deleted = await deleteBlog(id);
+    if (!deleted) return NextResponse.json({ error: 'Blog article not found' }, { status: 404 });
+
+    return NextResponse.json({ success: true, id });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

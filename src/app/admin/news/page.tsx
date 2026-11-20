@@ -16,7 +16,10 @@ import {
   XCircle, 
   Calendar, 
   Trash2,
-  Link2
+  Link2,
+  Star,
+  Image as ImageIcon,
+  Filter
 } from 'lucide-react';
 
 export default function AdminNewsPage() {
@@ -25,11 +28,23 @@ export default function AdminNewsPage() {
   const [loading, setLoading] = useState(true);
   const [fetchingRss, setFetchingRss] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [search, setSearch] = useState('');
 
   // Edit / Create Modal state
   const [editingItem, setEditingItem] = useState<NewsBrief | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+
+  const categories = [
+    'Rajasthan News',
+    'Recruitment News',
+    'RPSC',
+    'RSSB',
+    'Education',
+    'Employment',
+    'Government Announcements',
+    'Public Policy'
+  ];
 
   // Form State
   const [form, setForm] = useState({
@@ -37,10 +52,13 @@ export default function AdminNewsPage() {
     headline_hi: '',
     source: '',
     source_url: '',
-    category: 'Policy & Governance',
+    category: 'Rajasthan News',
     importance: 'medium' as ImportanceLevel,
     summary_en: '',
     summary_hi: '',
+    featured_image: '',
+    is_featured: false,
+    published_date: new Date().toISOString().split('T')[0],
     private_notes: '',
     status: 'published' as PublicationStatus
   });
@@ -98,7 +116,7 @@ export default function AdminNewsPage() {
         fetchNews();
       }
     } catch (e) {
-      showToast('Failed to publish', 'error');
+      showToast('Error approving news', 'error');
     }
   };
 
@@ -113,20 +131,81 @@ export default function AdminNewsPage() {
         })
       });
       if (res.ok) {
-        showToast('Article moved to draft', 'info');
+        showToast('Article status moved to draft', 'info');
         fetchNews();
       }
     } catch (e) {
-      showToast('Failed to update status', 'error');
+      showToast('Error updating status', 'error');
+    }
+  };
+
+  const handleToggleFeatured = async (item: NewsBrief) => {
+    try {
+      const updated = !item.is_featured;
+      const res = await fetch('/api/news', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: item.id,
+          is_featured: updated
+        })
+      });
+      if (res.ok) {
+        showToast(updated ? 'Featured on Homepage!' : 'Removed from Featured', 'success');
+        fetchNews();
+      }
+    } catch (e) {
+      showToast('Error updating featured status', 'error');
+    }
+  };
+
+  const handleSaveForm = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (editingItem) {
+        const res = await fetch('/api/news', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: editingItem.id,
+            ...form
+          })
+        });
+        if (res.ok) {
+          showToast('News article updated successfully!', 'success');
+          setEditingItem(null);
+          fetchNews();
+        } else {
+          showToast('Failed to update news article', 'error');
+        }
+      } else {
+        const res = await fetch('/api/news', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...form,
+            published_date: form.published_date || new Date().toISOString()
+          })
+        });
+        if (res.ok) {
+          showToast('News article published successfully!', 'success');
+          setIsCreating(false);
+          fetchNews();
+        } else {
+          showToast('Failed to create news article', 'error');
+        }
+      }
+    } catch (e) {
+      showToast('An unexpected error occurred', 'error');
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this news article link?')) return;
+    if (!confirm('Are you sure you want to permanently delete this news article?')) return;
     try {
       const res = await fetch(`/api/news?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
-        showToast('News article deleted successfully', 'success');
+        showToast('News article deleted', 'info');
         fetchNews();
       } else {
         showToast('Failed to delete news article', 'error');
@@ -143,12 +222,15 @@ export default function AdminNewsPage() {
       headline_hi: item.headline_hi,
       source: item.source,
       source_url: item.source_url,
-      category: item.category,
-      importance: item.importance,
-      summary_en: item.summary_en,
-      summary_hi: item.summary_hi,
+      category: item.category || 'Rajasthan News',
+      importance: item.importance || 'medium',
+      summary_en: item.summary_en || '',
+      summary_hi: item.summary_hi || '',
+      featured_image: item.featured_image || '',
+      is_featured: item.is_featured ?? false,
+      published_date: item.published_date ? item.published_date.split('T')[0] : new Date().toISOString().split('T')[0],
       private_notes: item.private_notes || '',
-      status: item.status
+      status: item.status || 'published'
     });
   };
 
@@ -160,89 +242,54 @@ export default function AdminNewsPage() {
       headline_hi: '',
       source: 'Dainik Bhaskar',
       source_url: '',
-      category: 'Policy & Governance',
+      category: 'Rajasthan News',
       importance: 'medium',
       summary_en: '',
       summary_hi: '',
+      featured_image: '',
+      is_featured: false,
+      published_date: new Date().toISOString().split('T')[0],
       private_notes: '',
       status: 'published'
     });
   };
 
-  const handleSaveForm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      if (editingItem) {
-        const res = await fetch('/api/news', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: editingItem.id,
-            ...form
-          })
-        });
-        if (res.ok) {
-          showToast('News link updated successfully', 'success');
-          setEditingItem(null);
-          fetchNews();
-        }
-      } else {
-        const res = await fetch('/api/news', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...form,
-            published_date: new Date().toISOString(),
-            ai_generated: false
-          })
-        });
-        if (res.ok) {
-          showToast('New news article link created', 'success');
-          setIsCreating(false);
-          fetchNews();
-        }
-      }
-    } catch (e: any) {
-      showToast(e.message || 'Error saving article', 'error');
-    }
-  };
+  const filteredNews = news.filter(n => {
+    const matchesSearch = !search.trim() || (
+      n.headline_en?.toLowerCase().includes(search.toLowerCase()) ||
+      n.headline_hi?.toLowerCase().includes(search.toLowerCase()) ||
+      n.source?.toLowerCase().includes(search.toLowerCase()) ||
+      n.category?.toLowerCase().includes(search.toLowerCase())
+    );
 
-  // Filtered List
-  const filtered = news.filter(item => {
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        item.headline_en.toLowerCase().includes(q) ||
-        item.headline_hi.toLowerCase().includes(q) ||
-        item.source.toLowerCase().includes(q) ||
-        item.summary_en.toLowerCase().includes(q)
-      );
-    }
-    return true;
+    const matchesCategory = categoryFilter === 'all' || n.category === categoryFilter;
+
+    return matchesSearch && matchesCategory;
   });
 
   return (
     <div className="flex-1 flex flex-col bg-slate-50 min-h-screen">
       <AdminHeader
-        title="News & Press Links Management"
-        subtitle="Manage verified news articles, direct press links, and media coverage updates without AI summarization"
+        title="Manage News & Press Links"
+        subtitle="Publish, curate, and direct-link verified news and recruitment reports across Rajasthan"
         actions={
           <div className="flex items-center gap-2">
             <button
               onClick={handleFetchRssFeeds}
               disabled={fetchingRss}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-900 hover:bg-purple-950 text-white font-bold text-xs shadow-sm transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold text-xs transition-colors disabled:opacity-50 cursor-pointer"
+              title="Sync latest RSS feeds from verified media houses"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${fetchingRss ? 'animate-spin' : ''}`} />
-              <span>{fetchingRss ? 'Syncing Feeds...' : 'Sync RSS Feeds'}</span>
+              <span>{fetchingRss ? 'Syncing...' : 'Sync RSS Feeds'}</span>
             </button>
 
             <button
               onClick={openCreate}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-accent-yellow hover:bg-amber-400 text-navy-900 font-bold text-xs shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-900 hover:bg-purple-800 text-white font-bold text-xs shadow-sm transition-colors cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              <span>Add News Link</span>
+              <Plus className="w-4 h-4 text-accent-yellow" />
+              <span>Create News Article</span>
             </button>
           </div>
         }
@@ -250,112 +297,130 @@ export default function AdminNewsPage() {
 
       <main className="flex-1 p-6 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
         
-        {/* Status Tabs and Search */}
+        {/* Controls Bar */}
         <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
-            {[
-              { id: 'all', label: 'All Articles' },
-              { id: 'published', label: 'Published' },
-              { id: 'pending_review', label: 'Pending Review', badge: news.filter(n => n.status === 'pending_review').length },
-              { id: 'draft', label: 'Drafts' },
-            ].map(tab => (
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Status tabs */}
+            {['all', 'published', 'pending_review', 'draft'].map(s => (
               <button
-                key={tab.id}
-                onClick={() => setStatusFilter(tab.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 ${
-                  statusFilter === tab.id
-                    ? 'bg-purple-900 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-600 hover:text-navy-900'
+                key={s}
+                onClick={() => setStatusFilter(s)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold capitalize transition-colors ${
+                  statusFilter === s
+                    ? 'bg-purple-900 text-white'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                <span>{tab.label}</span>
-                {tab.badge !== undefined && tab.badge > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-accent-yellow text-navy-900 text-[10px] font-black flex items-center justify-center">
-                    {tab.badge}
-                  </span>
-                )}
+                {s.replace('_', ' ')}
               </button>
             ))}
           </div>
 
-          <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search headline, source..."
-              className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-purple-700"
-            />
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            {/* Category Dropdown */}
+            <select
+              value={categoryFilter}
+              onChange={e => setCategoryFilter(e.target.value)}
+              className="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-purple-700"
+            >
+              <option value="all">All Categories</option>
+              {categories.map(c => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+
+            {/* Search */}
+            <div className="relative flex-1 md:w-60">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search news..."
+                className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-purple-700"
+              />
+            </div>
           </div>
         </div>
 
-        {/* News Cards */}
+        {/* News List */}
         <div className="space-y-4">
-          {filtered.length === 0 ? (
-            <div className="bg-white rounded-2xl p-12 text-center border border-slate-200">
-              <Newspaper className="w-10 h-10 text-slate-400 mx-auto mb-2" />
-              <p className="text-sm font-semibold text-slate-600">No news articles found</p>
+          {loading ? (
+            <div className="py-20 flex justify-center items-center text-slate-400">
+              <div className="w-8 h-8 border-3 border-purple-800 border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : filteredNews.length === 0 ? (
+            <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-xs space-y-3">
+              <Newspaper className="w-12 h-12 text-slate-300 mx-auto" />
+              <h3 className="text-base font-bold text-navy-900">No news articles found</h3>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                No news articles match your filter. You can create a news article or sync live RSS feeds.
+              </p>
+              <button
+                onClick={openCreate}
+                className="px-4 py-2 rounded-xl bg-purple-900 text-white font-bold text-xs hover:bg-purple-800 transition-colors cursor-pointer"
+              >
+                Create News Article
+              </button>
             </div>
           ) : (
-            filtered.map(item => (
+            filteredNews.map(item => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-purple-200 transition-all"
+                className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md transition-shadow"
               >
                 <div className="flex flex-col lg:flex-row items-start justify-between gap-4">
                   
                   {/* Left: Article Details */}
-                  <div className="space-y-2 flex-1">
-                    <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="px-2.5 py-0.5 rounded-full font-bold bg-purple-100 text-purple-900">
-                        {item.category}
-                      </span>
-
-                      <span className="text-slate-500 flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                        {new Date(item.published_date).toLocaleDateString()}
-                      </span>
-
-                      <span className="text-slate-400">•</span>
-                      <span className="font-semibold text-purple-900">
+                  <div className="flex-1 space-y-2">
+                    <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                      <span className="font-bold px-2 py-0.5 rounded bg-purple-50 text-purple-900 border border-purple-100">
                         {item.source}
                       </span>
+                      <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold">
+                        {item.category}
+                      </span>
+                      <span className="text-slate-400">•</span>
+                      <span className="text-slate-500 flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{new Date(item.published_date || item.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                      </span>
 
-                      {/* Status Badge */}
-                      {item.status === 'published' && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3" />
-                          Published
-                        </span>
-                      )}
-                      {item.status === 'pending_review' && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          Pending Review
-                        </span>
-                      )}
-                      {item.status === 'draft' && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">
-                          Draft
+                      {/* Status badge */}
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        item.status === 'published'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          : 'bg-amber-50 text-amber-700 border border-amber-200'
+                      }`}>
+                        {item.status === 'published' ? 'Published' : 'Draft / Pending'}
+                      </span>
+
+                      {/* Featured Star */}
+                      {item.is_featured && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-accent-yellow text-navy-900 flex items-center gap-1 shadow-xs">
+                          <Star className="w-3 h-3 fill-current" />
+                          <span>Homepage Featured</span>
                         </span>
                       )}
                     </div>
 
-                    <h3 className="text-base font-bold text-navy-900 leading-snug">
+                    <h3 className="text-base font-bold text-navy-900 hover:text-purple-900 transition-colors">
                       <a
                         href={item.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-purple-900 transition-colors inline-flex items-center gap-1.5"
+                        className="inline-flex items-center gap-1.5"
                       >
                         <span>{item.headline_en}</span>
                         <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                       </a>
                     </h3>
-                    <h4 className="text-sm font-semibold text-purple-950 font-hindi">
-                      {item.headline_hi}
-                    </h4>
+
+                    {item.headline_hi && (
+                      <h4 className="text-sm font-semibold text-purple-950 font-hindi">
+                        {item.headline_hi}
+                      </h4>
+                    )}
 
                     {/* Direct Link Banner */}
                     <div className="flex items-center gap-2 text-xs font-mono text-purple-950 bg-purple-50/70 px-3 py-1.5 rounded-xl border border-purple-100 max-w-2xl">
@@ -364,10 +429,10 @@ export default function AdminNewsPage() {
                     </div>
 
                     {/* Excerpts */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 text-xs text-slate-600">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-xs text-slate-600">
                       {item.summary_hi && (
-                        <div className="p-3 bg-purple-50/30 rounded-xl border border-purple-100/60 font-hindi">
-                          <span className="block font-bold text-purple-900 mb-1">
+                        <div className="p-2.5 bg-purple-50/40 rounded-xl border border-purple-100/60 font-hindi">
+                          <span className="block font-bold text-purple-900 mb-0.5 text-[11px]">
                             हिन्दी विवरण:
                           </span>
                           <p className="line-clamp-2">{item.summary_hi}</p>
@@ -375,8 +440,8 @@ export default function AdminNewsPage() {
                       )}
 
                       {item.summary_en && (
-                        <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                          <span className="block font-bold text-slate-700 mb-1">
+                        <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+                          <span className="block font-bold text-slate-700 mb-0.5 text-[11px]">
                             English Excerpt:
                           </span>
                           <p className="line-clamp-2">{item.summary_en}</p>
@@ -388,22 +453,36 @@ export default function AdminNewsPage() {
                   {/* Right: Actions */}
                   <div className="flex flex-row lg:flex-col gap-2 shrink-0 self-stretch sm:self-auto justify-end">
                     
+                    {/* Featured toggle */}
+                    <button
+                      onClick={() => handleToggleFeatured(item)}
+                      className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+                        item.is_featured
+                          ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                          : 'border border-slate-200 text-slate-500 hover:bg-slate-100'
+                      }`}
+                      title={item.is_featured ? 'Remove from Homepage' : 'Feature on Homepage'}
+                    >
+                      <Star className={`w-3.5 h-3.5 ${item.is_featured ? 'fill-current text-amber-600' : ''}`} />
+                      <span>{item.is_featured ? 'Featured' : 'Feature'}</span>
+                    </button>
+
                     {/* Direct Test Link */}
                     <a
                       href={item.source_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 text-xs font-bold transition-colors border border-purple-200"
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 text-xs font-bold transition-colors border border-purple-200"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>Test Direct Link</span>
+                      <span>Direct Link</span>
                     </a>
 
                     {/* Approve / Publish */}
                     {item.status !== 'published' ? (
                       <button
                         onClick={() => handleApprove(item)}
-                        className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors"
+                        className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Publish</span>
@@ -411,7 +490,7 @@ export default function AdminNewsPage() {
                     ) : (
                       <button
                         onClick={() => handleReject(item)}
-                        className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-medium"
+                        className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-medium cursor-pointer"
                       >
                         Unpublish
                       </button>
@@ -420,7 +499,7 @@ export default function AdminNewsPage() {
                     {/* Edit */}
                     <button
                       onClick={() => openEdit(item)}
-                      className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl border border-purple-200 text-purple-900 hover:bg-purple-50 text-xs font-bold"
+                      className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl border border-purple-200 text-purple-900 hover:bg-purple-50 text-xs font-bold cursor-pointer"
                     >
                       <FileEdit className="w-3.5 h-3.5" />
                       <span>Edit</span>
@@ -429,7 +508,7 @@ export default function AdminNewsPage() {
                     {/* Delete */}
                     <button
                       onClick={() => handleDelete(item.id)}
-                      className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl border border-rose-200 text-rose-700 hover:bg-rose-50 text-xs font-bold"
+                      className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl border border-rose-200 text-rose-700 hover:bg-rose-50 text-xs font-bold cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       <span>Delete</span>
@@ -447,18 +526,18 @@ export default function AdminNewsPage() {
 
       {/* Edit / Create Form Modal */}
       {(editingItem || isCreating) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/70 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/70 backdrop-blur-xs animate-fade-in">
           <div className="relative w-full max-w-3xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-purple-200 max-h-[90vh] flex flex-col">
             <div className="p-5 bg-purple-950 text-white flex items-center justify-between">
               <h3 className="text-base font-bold">
-                {editingItem ? 'Edit News Article Link' : 'Add Direct News Article Link'}
+                {editingItem ? 'Edit News Article Link' : 'Create / Add News Article'}
               </h3>
               <button
                 onClick={() => {
                   setEditingItem(null);
                   setIsCreating(false);
                 }}
-                className="text-white/70 hover:text-white"
+                className="text-white/70 hover:text-white cursor-pointer"
               >
                 <XCircle className="w-5 h-5" />
               </button>
@@ -496,40 +575,47 @@ export default function AdminNewsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">News Source Name *</label>
+                  <label className="block font-bold text-slate-700 mb-1">News Source *</label>
                   <input
                     type="text"
                     required
                     value={form.source}
                     onChange={e => setForm({ ...form, source: e.target.value })}
-                    placeholder="e.g. Dainik Bhaskar, Times of India, Rajasthan Patrika, PIB"
+                    placeholder="e.g. Dainik Bhaskar, Times of India, Rajasthan Patrika"
                     className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-1 focus:ring-purple-700"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Category</label>
+                  <label className="block font-bold text-slate-700 mb-1">Category *</label>
                   <select
                     value={form.category}
                     onChange={e => setForm({ ...form, category: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white font-semibold"
                   >
-                    <option value="Legal & Judiciary">Legal & Judiciary</option>
-                    <option value="Policy & Governance">Policy & Governance</option>
-                    <option value="Recruitment Exams">Recruitment Exams</option>
-                    <option value="Institutional Reforms">Institutional Reforms</option>
-                    <option value="Youth Advocacy">Youth Advocacy</option>
-                    <option value="Press & Media">Press & Media</option>
+                    {categories.map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
                   </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Publication Date</label>
+                  <input
+                    type="date"
+                    value={form.published_date}
+                    onChange={e => setForm({ ...form, published_date: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs"
+                  />
                 </div>
               </div>
 
-              {/* Direct News URL with Test Button */}
+              {/* Direct News URL */}
               <div>
                 <label className="block font-bold text-slate-700 mb-1">
-                  Direct News URL * (Original Article Link)
+                  Source Article URL * (Verified Link)
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -537,7 +623,7 @@ export default function AdminNewsPage() {
                     required
                     value={form.source_url}
                     onChange={e => setForm({ ...form, source_url: e.target.value })}
-                    placeholder="https://www.bhaskar.com/rajasthan/news/... or https://timesofindia.indiatimes.com/..."
+                    placeholder="https://www.bhaskar.com/... or https://timesofindia.indiatimes.com/..."
                     className="flex-1 p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-1 focus:ring-purple-700 font-mono"
                   />
                   {form.source_url && (
@@ -554,59 +640,74 @@ export default function AdminNewsPage() {
                 </div>
               </div>
 
+              {/* Featured Image */}
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">
+                  Featured Image URL (Optional)
+                </label>
+                <input
+                  type="url"
+                  value={form.featured_image}
+                  onChange={e => setForm({ ...form, featured_image: e.target.value })}
+                  placeholder="https://images.unsplash.com/... or article image URL"
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs"
+                />
+              </div>
+
+              {/* Summaries */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">
-                    English Excerpt / News Summary
+                    English Summary / Article Content
                   </label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={form.summary_en}
                     onChange={e => setForm({ ...form, summary_en: e.target.value })}
-                    placeholder="Brief news excerpt from the original report..."
+                    placeholder="Summary or content of the news article in English..."
                     className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-1 focus:ring-purple-700 leading-relaxed"
                   />
                 </div>
 
                 <div>
                   <label className="block font-bold text-slate-700 mb-1 font-hindi">
-                    हिन्दी विवरण / संक्षिप्त अंश
+                    हिन्दी सारांश / समाचार विवरण
                   </label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={form.summary_hi}
                     onChange={e => setForm({ ...form, summary_hi: e.target.value })}
-                    placeholder="समाचार का संक्षिप्त मुख्य विवरण..."
+                    placeholder="समाचार का विवरण हिन्दी में..."
                     className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-1 focus:ring-purple-700 font-hindi leading-relaxed"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Importance Level</label>
-                  <select
-                    value={form.importance}
-                    onChange={e => setForm({ ...form, importance: e.target.value as any })}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white"
-                  >
-                    <option value="critical">Critical</option>
-                    <option value="high">High Priority</option>
-                    <option value="medium">Medium</option>
-                    <option value="general">General</option>
-                  </select>
-                </div>
+              {/* Featured & Status Controls */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-purple-50/60 border border-purple-100">
+                <label className="flex items-center gap-3 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={form.is_featured}
+                    onChange={e => setForm({ ...form, is_featured: e.target.checked })}
+                    className="w-4 h-4 rounded text-purple-700 focus:ring-purple-600 border-slate-300"
+                  />
+                  <div>
+                    <span className="font-bold text-navy-900 block">Feature on Homepage</span>
+                    <span className="text-[10px] text-slate-500">Highlight this news item on the public homepage feed</span>
+                  </div>
+                </label>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Publication Status</label>
+                  <label className="block font-bold text-navy-900 mb-1">Status</label>
                   <select
                     value={form.status}
                     onChange={e => setForm({ ...form, status: e.target.value as any })}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white"
+                    className="w-full p-2 rounded-xl border border-slate-200 text-xs bg-white font-semibold"
                   >
                     <option value="published">Published (Live on Website)</option>
                     <option value="pending_review">Pending Review</option>
-                    <option value="draft">Draft</option>
+                    <option value="draft">Draft (Private)</option>
                   </select>
                 </div>
               </div>
@@ -618,15 +719,15 @@ export default function AdminNewsPage() {
                     setEditingItem(null);
                     setIsCreating(false);
                   }}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-xl bg-purple-900 hover:bg-purple-950 text-white font-bold"
+                  className="px-6 py-2 rounded-xl bg-purple-900 hover:bg-purple-950 text-white font-bold cursor-pointer"
                 >
-                  Save News Link
+                  Save News Article
                 </button>
               </div>
 

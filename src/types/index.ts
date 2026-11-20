@@ -87,6 +87,10 @@ export interface NewsBrief {
   importance: ImportanceLevel;
   summary_en: string;
   summary_hi: string;
+  content_en?: string;
+  content_hi?: string;
+  featured_image?: string;
+  is_featured?: boolean;
   key_points_en?: string[];
   key_points_hi?: string[];
   status: PublicationStatus;
@@ -169,6 +173,8 @@ export interface YouTubeVideo {
   views_count: number;
   published_date: string;
   category: string;
+  is_featured?: boolean;
+  is_published?: boolean;
 }
 
 export interface AppSettings {

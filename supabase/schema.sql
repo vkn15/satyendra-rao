@@ -180,4 +180,49 @@ create policy "Allow admin all access to campaigns" on public.campaigns for all 
 create policy "Allow admin all access to blogs" on public.blogs for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
 create policy "Allow admin all access to volunteers" on public.volunteers for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
 create policy "Allow admin all access to youtube_videos" on public.youtube_videos for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
-create policy "Allow admin all access to app_settings" on public.app_settings for all using (auth.role() = 'authenticated' or auth.role() = 'service_role');
+-- 9. ADMIN ROLES & USERS TABLE
+create table if not exists public.admin_users (
+  id uuid primary key references auth.users(id) on delete cascade,
+  email text unique not null,
+  role text default 'admin' check (role in ('super_admin', 'admin', 'editor')),
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS on admin_users
+alter table public.admin_users enable row level security;
+
+-- Function to check if the current user is an authorized admin
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+as $$
+  select exists (
+    select 1 from public.admin_users
+    where id = auth.uid()
+  );
+$$;
+
+-- Policies for admin_users
+create policy "Allow admins to read admin_users"
+on public.admin_users for select
+using (auth.uid() = id or public.is_admin() or auth.role() = 'service_role');
+
+create policy "Allow super admin to manage admin_users"
+on public.admin_users for all
+using (
+  exists (
+    select 1 from public.admin_users
+    where id = auth.uid() and role = 'super_admin'
+  ) or auth.role() = 'service_role'
+);
+
+-- INSTRUCTIONS TO CREATE FIRST ADMIN USER IN SUPABASE:
+-- 1. Create a user in Supabase Auth via Dashboard: Authentication -> Users -> Add User.
+-- 2. Run the SQL below to grant super_admin privileges:
+--    insert into public.admin_users (id, email, role)
+--    select id, email, 'super_admin'
+--    from auth.users
+--    where email = 'satyendra.rao@example.com' -- replace with actual admin email
+--    on conflict (id) do nothing;
+

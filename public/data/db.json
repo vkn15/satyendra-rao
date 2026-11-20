@@ -74907,6 +74907,64 @@
       "language": "hi",
       "id": "pv-1795125921514-i13je",
       "created_at": "2026-11-19T22:05:21.514Z"
+    },
+    {
+      "path": "/news",
+      "title": "Daily News & Media Coverage | Satyendra Rao",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_ouxwfx5kmwo3n7mi",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795125954912-rnm7n",
+      "created_at": "2026-11-19T22:05:54.912Z"
+    },
+    {
+      "path": "/blog",
+      "visitor_id": "test-visitor-202",
+      "session_id": "test-session-202",
+      "user_agent": "node",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795166239826-nwmf0",
+      "created_at": "2026-11-20T09:17:19.826Z"
+    },
+    {
+      "path": "/",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_4cqi9kbzmwmhplsu",
+      "session_id": "s_bbljn0f4mwos7iy1",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.2 Safari/605.1.15",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795167213489-gcbq2",
+      "created_at": "2026-11-20T09:33:33.489Z"
+    },
+    {
+      "path": "/",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_xhf91j41mwos8alt",
+      "session_id": "s_fv4wu7q4mwos8alv",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795167249353-0ra9b",
+      "created_at": "2026-11-20T09:34:09.353Z"
+    },
+    {
+      "path": "/",
+      "title": "Satyendra Rao | Youth Reform Movement India | सत्येंद्र राव - युवा सुधार आंदोलन",
+      "visitor_id": "v_xhf91j41mwos8alt",
+      "session_id": "s_krnpfxhimwov5ebe",
+      "referrer": "",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "device_type": "desktop",
+      "language": "hi",
+      "id": "pv-1795172153030-6nhuc",
+      "created_at": "2026-11-20T10:55:53.030Z"
     }
   ],
   "analytics_events": [
@@ -106357,6 +106415,19 @@
         "Policy Research",
         "Youth Mobilization"
       ],
+      "id": "vol-1795166239925",
+      "status": "new",
+      "created_at": "2026-11-20T09:17:19.925Z"
+    },
+    {
+      "full_name": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "phone": "9876543210",
+      "district": "Jaipur",
+      "interests": [
+        "Policy Research",
+        "Youth Mobilization"
+      ],
       "id": "vol-1795125921652",
       "status": "new",
       "created_at": "2026-11-19T22:05:21.652Z"
@@ -106643,5 +106714,120 @@
     "contact_email": "contact@satyendrarao.in",
     "contact_phone": "+91 98290 12345",
     "office_address": "Youth Reform Movement Secretariat, Civil Lines, Jaipur, Rajasthan 302006"
-  }
+  },
+  "achievements": [
+    {
+      "id": "ach-1",
+      "year": "2021 - 2022",
+      "title_en": "Grassroots Aspirant Dialogues & First Satyagraha",
+      "title_hi": "ग्रामीण छात्र संवाद एवं प्रथम सत्याग्रह",
+      "impact_metric_en": "10,000+ Aspirants Consulted",
+      "impact_metric_hi": "10,000+ प्रतियोगी छात्रों से प्रत्यक्ष संवाद",
+      "description_en": "Direct dialogue with competitive students in Sikar, Kota, and Jaipur hostels, formalizing the first statewide anti-leak charter.",
+      "description_hi": "सीकर, कोटा और जयपुर के कोचिंग हॉस्टलों में रहकर 10,000+ प्रतियोगी छात्रों से प्रत्यक्ष संवाद। पेपर लीक के विरुद्ध राज्यव्यापी मांग पत्र तैयार किया गया।",
+      "category": "Ground Movement",
+      "is_featured": true
+    },
+    {
+      "id": "ach-2",
+      "year": "2023",
+      "title_en": "135 km Historic Foot March (Ajmer to Jaipur)",
+      "title_hi": "अजमेर से जयपुर 135 किमी विशाल पदयात्रा",
+      "impact_metric_en": "135 km Covered • 10,000 Youth",
+      "impact_metric_hi": "135 किमी पदयात्रा • 10,000 युवा",
+      "description_en": "A historic peaceful padyatra mobilizing youth from RPSC headquarters in Ajmer to the state capital Jaipur demanding 90-day recruitment schedules.",
+      "description_hi": "आरपीएससी में पारदर्शिता और 90 दिवसीय भर्ती समय-सीमा की मांग को लेकर 10,000 युवाओं के साथ ऐतिहासिक शांतिपूर्ण पदयात्रा।",
+      "category": "Padyatra",
+      "is_featured": true
+    },
+    {
+      "id": "ach-3",
+      "year": "2024 - 2025",
+      "title_en": "Jaipur Youth Maha-Panchayat: 50,000 Strong Conclave",
+      "title_hi": "जयपुर युवा महापंचायत: 50,000 अभ्यर्थियों का ऐतिहासिक जमावड़ा",
+      "impact_metric_en": "50,000+ Conclave in Jaipur",
+      "impact_metric_hi": "50,000+ अभ्यर्थियों का विशाल सम्मेलन",
+      "description_en": "Historic gathering of students in Jaipur demanding transparent investigations into recruitment anomalies and biometric center vetting.",
+      "description_hi": "एसआई भर्ती एवं शिक्षक भर्ती में धांधली की निष्पक्ष जांच और पारदर्शी पुनः परीक्षा हेतु ऐतिहासिक जनसमर्थन।",
+      "category": "Maha-Panchayat",
+      "is_featured": true
+    },
+    {
+      "id": "ach-4",
+      "year": "2026",
+      "title_en": "Statutory 10-Point Youth Reform Charter",
+      "title_hi": "10-सूत्रीय \"युवा सुधार चार्टर\" का वैधानिक प्रारूप",
+      "impact_metric_en": "33 Districts Policy Presentation",
+      "impact_metric_hi": "33 जिलों हेतु वैधानिक सुधार",
+      "description_en": "Presented to state administration: district-level centers, candidate exam insurance, biometric vetting, and an independent Youth Lokpal.",
+      "description_hi": "मुख्य शासन सचिवालय में प्रस्तुत: परीक्षा केंद्रों का जिला स्तर आवंटन, परीक्षा बीमा, बायोमेट्रिक सुरक्षा और स्वतंत्र युवा लोकपाल।",
+      "category": "Policy Landmark",
+      "is_featured": true
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-1",
+      "title_en": "Rajasthan Youth Reform Townhall - Jaipur Conclave",
+      "title_hi": "राजस्थान युवा सुधार टाउनहॉल - जयपुर महाधिवेशन",
+      "date": "2026-12-05",
+      "time": "11:00 AM",
+      "location": "Maharana Pratap Auditorium, JLN Marg, Jaipur",
+      "district": "Jaipur",
+      "category": "Student Townhall",
+      "description_en": "Comprehensive consultative dialogue on paper leak penalty statutes and transparent examination calendar mandates.",
+      "description_hi": "पेपर लीक निवारण कानूनों एवं 90-दिवसीय पारदर्शी भर्ती कैलेंडर पर अभ्यर्थियों के साथ राज्यस्तरीय परिचर्चा।",
+      "rsvp_url": "https://satyendrarao.in/volunteer",
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-2",
+      "title_en": "Statewide Candidate Rights & RTI Legal Workshop",
+      "title_hi": "राज्यव्यापी अभ्यर्थी अधिकार एवं आरटीआई विधिक कार्यशाला",
+      "date": "2026-12-15",
+      "time": "02:00 PM",
+      "location": "District Youth Center, Sikar Road, Sikar",
+      "district": "Sikar",
+      "category": "Legal Workshop",
+      "description_en": "Practical legal orientation on filing answer key appeals, RTI tracking of vacant seats, and candidate rights.",
+      "description_hi": "उत्तर कुंजी आपत्ति, रिक्त पदों की आरटीआई ट्रैकिंग एवं विधिक अधिकारों पर निःशुल्क प्रशिक्षण।",
+      "rsvp_url": "https://satyendrarao.in/volunteer",
+      "status": "upcoming"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1",
+      "title_en": "Ajmer to Jaipur 135 km Padyatra",
+      "title_hi": "अजमेर से जयपुर 135 किमी पदयात्रा",
+      "image_url": "/images/satyendra_hero.png",
+      "category": "Padyatra",
+      "date": "2023-10-15",
+      "caption_en": "Satyendra Rao leading 10,000+ youth across National Highway demanding 90-day recruitment schedule.",
+      "caption_hi": "10,000 युवाओं के साथ 90-दिवसीय भर्ती कैलेंडर की मांग को लेकर पदयात्रा।",
+      "is_featured": true
+    },
+    {
+      "id": "gal-2",
+      "title_en": "Jaipur Youth Maha-Panchayat Conclave",
+      "title_hi": "जयपुर युवा महापंचायत सम्मेलन",
+      "image_url": "/images/satyendra_about_bw.jpg",
+      "category": "Conclave",
+      "date": "2024-09-20",
+      "caption_en": "Addressing 50,000 students on judicial appeals against exam irregularities.",
+      "caption_hi": "अभ्यर्थियों को संबोधित करते हुए सत्येंद्र राव।",
+      "is_featured": true
+    },
+    {
+      "id": "gal-3",
+      "title_en": "Press Conference at Pink City Press Club",
+      "title_hi": "पिंक सिटी प्रेस क्लब में प्रेस वार्ता",
+      "image_url": "/images/satyendra_rao_new.jpg",
+      "category": "Press Conference",
+      "date": "2025-03-12",
+      "caption_en": "Release of the 10-Point Statutory Youth Reform Charter.",
+      "caption_hi": "10-सूत्रीय युवा सुधार चार्टर का विमोचन।",
+      "is_featured": true
+    }
+  ]
 }

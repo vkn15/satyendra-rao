@@ -22,6 +22,9 @@ export interface DatabaseState {
   volunteers: Volunteer[];
   youtube_videos: YouTubeVideo[];
   settings: AppSettings;
+  achievements?: any[];
+  events?: any[];
+  gallery?: any[];
 }
 
 // Generate realistic past timestamp helper

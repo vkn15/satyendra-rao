@@ -10,14 +10,33 @@ function extractYouTubeId(input: string): string {
   if (clean.length === 11 && !clean.includes('/') && !clean.includes('?')) {
     return clean;
   }
-  const match = clean.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  const match = clean.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|live\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
   return match ? match[1] : clean;
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const category = searchParams.get('category');
+    const featuredOnly = searchParams.get('featured') === 'true';
+    const publishedOnly = searchParams.get('published') === 'true';
+
     const db = getDatabase();
-    return NextResponse.json(db.youtube_videos || []);
+    let videos: YouTubeVideo[] = db.youtube_videos || [];
+
+    if (publishedOnly) {
+      videos = videos.filter(v => v.is_published !== false);
+    }
+
+    if (featuredOnly) {
+      videos = videos.filter(v => v.is_featured === true);
+    }
+
+    if (category && category !== 'All') {
+      videos = videos.filter(v => v.category?.toLowerCase() === category.toLowerCase());
+    }
+
+    return NextResponse.json(videos);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -33,6 +52,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid YouTube Video ID or URL is required' }, { status: 400 });
     }
 
+    const defaultThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
     const newVideo: YouTubeVideo = {
       id: `yt-${Date.now()}`,
       video_id: videoId,
@@ -40,11 +61,13 @@ export async function POST(req: NextRequest) {
       title_hi: body.title_hi || body.title_en || 'वीडियो',
       description_en: body.description_en || '',
       description_hi: body.description_hi || '',
-      thumbnail_url: body.thumbnail_url || `https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80`,
+      thumbnail_url: body.thumbnail_url || defaultThumbnail,
       duration: body.duration || '15:00',
-      views_count: parseInt(body.views_count) || 1000,
+      views_count: parseInt(body.views_count) || 5000,
       published_date: body.published_date || new Date().toISOString(),
-      category: body.category || 'Speeches'
+      category: body.category || 'Speeches',
+      is_featured: body.is_featured ?? false,
+      is_published: body.is_published ?? true
     };
 
     if (!db.youtube_videos) db.youtube_videos = [];
@@ -75,6 +98,9 @@ export async function PATCH(req: NextRequest) {
 
     if (updates.video_id) {
       updates.video_id = extractYouTubeId(updates.video_id);
+      if (!updates.thumbnail_url) {
+        updates.thumbnail_url = `https://img.youtube.com/vi/${updates.video_id}/hqdefault.jpg`;
+      }
     }
 
     db.youtube_videos[index] = {
@@ -99,15 +125,14 @@ export async function DELETE(req: NextRequest) {
     }
 
     const db = getDatabase();
-    const initialLen = db.youtube_videos?.length || 0;
-    db.youtube_videos = db.youtube_videos?.filter(v => v.id !== id) || [];
-
-    if (db.youtube_videos.length === initialLen) {
-      return NextResponse.json({ error: 'Video not found' }, { status: 404 });
+    if (!db.youtube_videos) {
+      return NextResponse.json({ error: 'No videos found' }, { status: 404 });
     }
 
+    db.youtube_videos = db.youtube_videos.filter(v => v.id !== id);
     saveDatabase(db);
-    return NextResponse.json({ ok: true });
+
+    return NextResponse.json({ success: true, message: 'Video deleted successfully' });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

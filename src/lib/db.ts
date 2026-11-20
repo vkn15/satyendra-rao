@@ -436,6 +436,17 @@ export async function updateBlog(id: string, updates: Partial<Blog>): Promise<Bl
   return db.blogs[idx];
 }
 
+export async function deleteBlog(id: string): Promise<boolean> {
+  const db = getDatabase();
+  const initialLength = db.blogs.length;
+  db.blogs = db.blogs.filter(b => b.id !== id && b.slug !== id);
+  if (db.blogs.length !== initialLength) {
+    saveDatabase(db);
+    return true;
+  }
+  return false;
+}
+
 // ==========================================
 // 5. VOLUNTEERS
 // ==========================================
