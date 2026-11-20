@@ -30,6 +30,7 @@ export function getUserSupabaseClient(token: string) {
   return createClient(supabaseUrl, supabaseAnonKey, {
     global: {
       headers: {
+        apikey: supabaseAnonKey,
         Authorization: `Bearer ${token}`
       }
     },

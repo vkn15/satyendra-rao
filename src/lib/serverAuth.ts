@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getServerSupabaseClient } from './serverSupabase';
+import { getServerSupabaseClient, getUserSupabaseClient } from './serverSupabase';
+
+export const dynamic = 'force-dynamic';
 
 export interface AdminAuthResult {
   authorized: boolean;
@@ -26,25 +28,49 @@ export async function verifyAdminSession(req?: NextRequest): Promise<AdminAuthRe
       return { authorized: false, error: 'Unauthorized: No active admin session', status: 401 };
     }
 
-    const supabase = getServerSupabaseClient();
-    if (!supabase) {
+    const baseSupabase = getServerSupabaseClient();
+    if (!baseSupabase) {
       return { authorized: false, error: 'Service Unavailable: Supabase is not configured on the server', status: 503 };
     }
 
     // 1. Verify access token with Supabase Auth
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    const { data: { user }, error: authError } = await baseSupabase.auth.getUser(token);
     if (authError || !user) {
       return { authorized: false, error: 'Unauthorized: Invalid or expired session', status: 401 };
     }
 
     // 2. Verify admin role in public.admin_users table
-    const { data: adminRecord, error: roleError } = await supabase
+    // Forward the user's access token so that Postgres RLS (auth.uid() = id) evaluates to true
+    const hasServiceRole = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
+    const authClient = hasServiceRole
+      ? baseSupabase
+      : (getUserSupabaseClient(token) || baseSupabase);
+
+    let adminRecord: { id: string; email: string; role: string } | null = null;
+
+    // Check by user ID first
+    const { data: byIdData, error: byIdError } = await authClient
       .from('admin_users')
       .select('id, email, role')
       .eq('id', user.id)
-      .single();
+      .maybeSingle();
 
-    if (roleError || !adminRecord) {
+    if (byIdData) {
+      adminRecord = byIdData;
+    } else if (user.email) {
+      // Secondary check by email in case of manual record insertion
+      const { data: byEmailData } = await authClient
+        .from('admin_users')
+        .select('id, email, role')
+        .ilike('email', user.email.trim())
+        .maybeSingle();
+
+      if (byEmailData) {
+        adminRecord = byEmailData;
+      }
+    }
+
+    if (!adminRecord) {
       return { authorized: false, error: 'Forbidden: User is not authorized in admin directory', status: 403 };
     }
 
