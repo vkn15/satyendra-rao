@@ -1,0 +1,232 @@
+export const translations = {
+  hi: {
+    // Nav
+    brandName: 'सत्येंद्र राव',
+    brandSubtitle: 'सामाजिक कार्यकर्ता | युवा पैरोकार | जननीति विशेषज्ञ',
+    navHome: 'होम',
+    navAbout: 'परिचय',
+    navCampaigns: 'अभियान',
+    navCharter: 'युवा सुधार चार्टर',
+    navNews: 'दैनिक समाचार',
+    navMedia: 'मीडिया',
+    navBlog: 'ब्लॉग व विचार',
+    navVolunteer: 'आंदोलन से जुड़ें',
+    btnVolunteerNow: 'कार्यकर्ता बनें',
+    btnJoinMovement: 'आंदोलन से जुड़ें',
+    btnWatchMessage: 'मेरा संदेश देखें',
+    btnKnowMore: 'विस्तार से जानें',
+    btnReadFullCharter: 'पूरा चार्टर पढ़ें',
+    btnReadOriginal: 'मूल समाचार पढ़ें',
+    btnSaveForLater: 'बाद के लिए सुरक्षित करें',
+    btnMarkImportant: 'महत्वपूर्ण चिह्नित करें',
+    btnAddNotes: 'निजी टिप्पणी जोड़ें',
+    btnSubmit: 'जमा करें',
+    btnFilter: 'फ़िल्टर करें',
+    btnSearch: 'खोजें',
+    btnAdminLogin: 'एडमिन पैनल',
+
+    // Hero
+    heroTag: 'युवा | परीक्षा | भर्ती सुधार',
+    heroHeadlinePart1: 'युवाओं के रोजगार,',
+    heroHeadlinePart2: 'पारदर्शी भर्ती और',
+    heroHeadlinePart3: 'जवाबदेह भर्ती संस्थाओं के लिए',
+    heroHighlightPill: 'एक सतत जनआंदोलन',
+    heroSubtitle: 'सम्पूर्ण भारत में निष्पक्ष, पारदर्शी और समयबद्ध भर्ती प्रक्रियाओं की स्थापना हेतु एक समर्पित जनक्रांति।',
+
+    // 4 Features Bar
+    feature1Title: 'पारदर्शी भर्ती प्रक्रिया',
+    feature1Desc: 'ओएमआर कार्बन प्रति, डिजिटल स्कैनिंग व सार्वजनिक सत्यापन',
+    feature2Title: 'समयबद्ध परीक्षाएँ',
+    feature2Desc: 'विज्ञप्ति से नियुक्ति तक अधिकतम 90 दिनों की निश्चित समय सीमा',
+    feature3Title: 'जवाबदेह भर्ती संस्थाएँ',
+    feature3Desc: 'आयोग के अधिकारियों की प्रत्यक्ष जवाबदेही व 30 दिवसीय जनसुनवाई',
+    feature4Title: 'युवाओं के लिए समान अवसर',
+    feature4Desc: 'पेपर लीक माफियाओं पर आजीवन कारावास व अभ्यर्थियों को निःशुल्क यात्रा',
+
+    // About Section
+    aboutHeading: 'सत्येंद्र राव के बारे में',
+    aboutParagraph1: 'मैं सत्येंद्र राव, एक सामाजिक कार्यकर्ता और युवा पैरोकार हूँ। मैं विशेष रूप से राजस्थान और पूरे भारत में पारदर्शी, समयबद्ध और निष्पक्ष भर्ती प्रक्रियाओं की स्थापना के लिए निरंतर संघर्षरत हूँ।',
+    aboutParagraph2: 'मेरा दृढ़ विश्वास है कि एक सुदृढ़, निष्पक्ष और भ्रष्टाचार-मुक्त भर्ती तंत्र ही एक समृद्ध, स्वाभिमानी और समावेशी समाज की सबसे मजबूत नींव है।',
+
+    // Key Campaigns
+    campaignsHeading: 'मुख्य अभियान',
+    campaign1Title: 'SI भर्ती पुनः परीक्षा',
+    campaign1Sub: '1.5 लाख अभ्यर्थियों के लिए न्याय',
+    campaign2Title: 'RPSC / RSSB सुधार',
+    campaign2Sub: 'पारदर्शिता, जवाबदेही और समय सीमा',
+    campaign3Title: 'शिक्षक एवं अन्य भर्ती',
+    campaign3Sub: 'रिक्त पदों की शीघ्र पूर्ति और नए कैलेंडर की मांग',
+    campaignViewAll: 'सभी अभियान देखें',
+
+    // Youth Charter
+    charterHeading: 'युवा सुधार चार्टर',
+    charterSubtitle: 'युवा परीक्षा और भर्ती सुधार के लिए हमारा संकल्प',
+    charterPoint1: 'सभी भर्ती प्रक्रियाएँ अधिकतम 90 दिनों में पूरी हों',
+    charterPoint2: 'RPSC / RSSB में पारदर्शिता और जवाबदेही',
+    charterPoint3: 'नियमित भर्ती कैलेंडर और रिक्त पदों की समय पर पूर्ति',
+    charterPoint4: 'प्रमाणिक एवं आधिकारिक अध्ययन सामग्री की सूची',
+    charterPoint5: 'NA (Not Available) पदों की जवाबदेही तय हो',
+
+    // Impact Ribbon
+    impactMetric1Value: '30 लाख+',
+    impactMetric1Label: 'युवाओं की आवाज',
+    impactMetric2Value: '100+',
+    impactMetric2Label: 'जिला स्तर पर जनसंवाद',
+    impactMetric3Value: '15+',
+    impactMetric3Label: 'मुख्य अभियान',
+    impactMetric4Value: '500+',
+    impactMetric4Label: 'मीडिया कवरेज',
+    impactMetric5Value: '1 लाख+',
+    impactMetric5Label: 'सक्रिय समर्थक',
+
+    // News & Press Links
+    newsHeading: 'दैनिक समाचार एवं मीडिया कवरेज',
+    newsSubtitle: 'भर्ती परीक्षाओं, न्यायालयीन निर्णयों और युवा नीति पर प्रमुख समाचार पत्रों व मीडिया की सीधी रिपोर्ट्स',
+    newsCategoryAll: 'सभी विषय',
+    newsImportanceAll: 'सभी प्राथमिकता',
+    newsImportanceCritical: 'अति महत्वपूर्ण',
+    newsImportanceHigh: 'उच्च प्राथमिकता',
+    newsImportanceMedium: 'सामान्य सूचना',
+    newsApprovedBadge: 'सत्यापित स्रोत',
+    newsDirectBadge: 'सीधा समाचार लिंक',
+    newsSearchPlaceholder: 'समाचार, अखबार या विषय खोजें...',
+    newsSaved: 'सुरक्षित किया गया',
+    newsSave: 'सुरक्षित करें',
+
+    // Volunteer Form
+    volHeading: 'युवा सुधार आंदोलन से जुड़ें',
+    volSubtitle: 'राजस्थान के हर जिले, तहसील और गांव तक युवाओं की आवाज पहुंचाने के लिए हमारे साथ कदम मिलाएं।',
+    volName: 'पूरा नाम',
+    volPhone: 'मोबाइल नंबर',
+    volEmail: 'ईमेल पता',
+    volState: 'राज्य',
+    volDistrict: 'जिला',
+    volOccupation: 'पेशा / अध्ययन',
+    volRole: 'इच्छुक भूमिका',
+    volMessage: 'आपका संदेश / सुझाव',
+    volSuccessMsg: 'धन्यवाद! आपका पंजीकरण सफलतापूर्वक दर्ज कर लिया गया है। हमारी टीम जल्द ही आपसे संपर्क करेगी।',
+
+    // Footer
+    footerMission: 'सत्येंद्र राव के नेतृत्व में युवाओं के संवैधानिक अधिकारों, परीक्षा सुधारों और पारदर्शी शासन की स्थापना हेतु समर्पित जनआंदोलन।',
+    footerQuickLinks: 'त्वरित लिंक',
+    footerContact: 'संपर्क एवं कार्यालय',
+    footerLocation: 'जयपुर, राजस्थान - भारत',
+    footerCopyright: '© 2026 सत्येंद्र राव युवा सुधार आंदोलन। सर्वाधिकार सुरक्षित।',
+    footerDesignedFor: 'युवा भविष्य, परीक्षा पारदर्शिता और राष्ट्र निर्माण को समर्पित।'
+  },
+  en: {
+    // Nav
+    brandName: 'Satyendra Rao',
+    brandSubtitle: 'Social Activist | Youth Advocate | Public Policy',
+    navHome: 'Home',
+    navAbout: 'About',
+    navCampaigns: 'Campaigns',
+    navCharter: 'Youth Reform Charter',
+    navNews: 'Daily News',
+    navMedia: 'Media',
+    navBlog: 'Blog',
+    navVolunteer: 'Join Movement',
+    btnVolunteerNow: 'Volunteer Now',
+    btnJoinMovement: 'Join the Movement',
+    btnWatchMessage: 'Watch My Message',
+    btnKnowMore: 'Know More',
+    btnReadFullCharter: 'Read Full Charter',
+    btnReadOriginal: 'Read Original Article',
+    btnSaveForLater: 'Save for Later',
+    btnMarkImportant: 'Mark as Important',
+    btnAddNotes: 'Add Private Notes',
+    btnSubmit: 'Submit',
+    btnFilter: 'Filter',
+    btnSearch: 'Search',
+    btnAdminLogin: 'Admin Panel',
+
+    // Hero
+    heroTag: 'YOUTH | EXAMINATION | RECRUITMENT REFORMS',
+    heroHeadlinePart1: 'For Youth Employment,',
+    heroHeadlinePart2: 'Transparent Recruitments &',
+    heroHeadlinePart3: 'Accountable Public Commissions',
+    heroHighlightPill: 'A Continuous People\'s Movement',
+    heroSubtitle: 'A dedicated people\'s movement for fair, transparent and time-bound recruitments across India.',
+
+    // 4 Features Bar
+    feature1Title: 'Transparent Recruitment Process',
+    feature1Desc: 'OMR carbon copies, digital barcode scanning & public verification',
+    feature2Title: 'Time-Bound Examinations',
+    feature2Desc: 'Strict 90-day maximum statutory timeline from notification to joining',
+    feature3Title: 'Accountable Recruitment Bodies',
+    feature3Desc: 'Direct accountability of commission officials & 30-day public grievance hearings',
+    feature4Title: 'Equal Opportunities for Youth',
+    feature4Desc: 'Life imprisonment for paper leak mafias & free examination transit for youth',
+
+    // About Section
+    aboutHeading: 'About Satyendra Rao',
+    aboutParagraph1: 'I am Satyendra Rao, a social activist and youth advocate working for transparent, time-bound and fair recruitment processes, especially in Rajasthan and across India.',
+    aboutParagraph2: 'I believe that a strong, corruption-free and just recruitment system is the foundational cornerstone of a prosperous, self-reliant and inclusive society.',
+
+    // Key Campaigns
+    campaignsHeading: 'Key Campaigns',
+    campaign1Title: 'Sub-Inspector (SI) Re-Exam',
+    campaign1Sub: 'Justice for 1.5 Lakh Eligible Candidates',
+    campaign2Title: 'RPSC / RSSB Structural Reform',
+    campaign2Sub: 'Transparency, Accountability & Strict Timelines',
+    campaign3Title: 'Teacher & Grade Recruitments',
+    campaign3Sub: 'Swift Vacancy Fulfillment & Annual Calendar',
+    campaignViewAll: 'View All Campaigns',
+
+    // Youth Charter
+    charterHeading: 'Youth Reform Charter',
+    charterSubtitle: 'Our Resolution for Examination & Recruitment Reforms',
+    charterPoint1: 'All recruitment procedures completed within 90 days',
+    charterPoint2: 'Comprehensive transparency and accountability in RPSC / RSSB',
+    charterPoint3: 'Regular annual recruitment calendar and timely filling of vacant posts',
+    charterPoint4: 'Standard certified reference study materials issued by authorities',
+    charterPoint5: 'Strict statutory accountability on NA (Not Available) post declarations',
+
+    // Impact Ribbon
+    impactMetric1Value: '3 Million+',
+    impactMetric1Label: 'Youth Voice Mobilized',
+    impactMetric2Value: '100+',
+    impactMetric2Label: 'District Public Dialogues',
+    impactMetric3Value: '15+',
+    impactMetric3Label: 'Major Campaigns',
+    impactMetric4Value: '500+',
+    impactMetric4Label: 'Media Coverages',
+    impactMetric5Value: '100K+',
+    impactMetric5Label: 'Active Supporters',
+
+    // News & Press Links
+    newsHeading: 'Daily News & Media Coverage',
+    newsSubtitle: 'Direct press reports, judicial updates, and exam reform headlines from leading newspapers',
+    newsCategoryAll: 'All Categories',
+    newsImportanceAll: 'All Importance',
+    newsImportanceCritical: 'Critical / Urgent',
+    newsImportanceHigh: 'High Priority',
+    newsImportanceMedium: 'General Update',
+    newsApprovedBadge: 'Verified Source',
+    newsDirectBadge: 'Direct News Link',
+    newsSearchPlaceholder: 'Search news, publication, or keywords...',
+    newsSaved: 'Saved',
+    newsSave: 'Save',
+
+    // Volunteer Form
+    volHeading: 'Join the Youth Reform Movement',
+    volSubtitle: 'Walk with us to carry the voice of aspiring youth to every district, tehsil, and village across Rajasthan and India.',
+    volName: 'Full Name',
+    volPhone: 'Phone Number',
+    volEmail: 'Email Address',
+    volState: 'State',
+    volDistrict: 'District',
+    volOccupation: 'Occupation / Field of Study',
+    volRole: 'Preferred Role',
+    volMessage: 'Your Message or Suggestions',
+    volSuccessMsg: 'Thank you! Your volunteer registration has been recorded successfully. Our team will contact you shortly.',
+
+    // Footer
+    footerMission: 'A grassroots people\'s movement led by Satyendra Rao dedicated to protecting constitutional youth rights, recruitment transparency, and meritocracy.',
+    footerQuickLinks: 'Quick Links',
+    footerContact: 'Contact & State Office',
+    footerLocation: 'Jaipur, Rajasthan - India',
+    footerCopyright: '© 2026 Satyendra Rao Youth Reform Movement. All rights reserved.',
+    footerDesignedFor: 'Dedicated to Youth Futures, Examination Integrity & Nation Building.'
+  }
+};
