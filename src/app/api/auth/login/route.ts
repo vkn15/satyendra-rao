@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
-import { getServerSupabaseClient, getUserSupabaseClient } from '@/lib/serverSupabase';
+import { isDesignatedAdmin } from '@/lib/serverAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Authenticate strictly with Supabase Auth
+    // 2. Authenticate strictly with Supabase Auth (email/password)
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password: password
@@ -35,70 +35,38 @@ export async function POST(req: NextRequest) {
 
     if (authError || !authData.user || !authData.session) {
       return NextResponse.json(
-        { error: 'Invalid email or password. Please check your credentials.' },
+        { error: authError?.message || 'Invalid email or password. Please check your credentials.' },
         { status: 401 }
       );
     }
 
-    // 3. Verify server-side authorization in public.admin_users
-    // Use service role if configured; otherwise use client authenticated with the user's access token so RLS passes
-    const hasServiceRole = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
-    const authClient = hasServiceRole
-      ? (getServerSupabaseClient() || supabase)
-      : (getUserSupabaseClient(authData.session.access_token) || getServerSupabaseClient() || supabase);
+    // 3. Verify server-side that the authenticated user matches the designated administrator
+    const designatedAdminId = (process.env.ADMIN_USER_ID || '').trim();
+    const designatedAdminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
 
-    let adminRecord: { id: string; email: string; role: string } | null = null;
-    let queryError: any = null;
-
-    // Check by user ID first
-    const { data: byIdData, error: byIdError } = await authClient
-      .from('admin_users')
-      .select('id, email, role')
-      .eq('id', authData.user.id)
-      .maybeSingle();
-
-    if (byIdData) {
-      adminRecord = byIdData;
-    } else {
-      queryError = byIdError;
-      // Fallback: check by email in case of manual insert prior to auth ID sync
-      if (authData.user.email) {
-        const { data: byEmailData, error: byEmailError } = await authClient
-          .from('admin_users')
-          .select('id, email, role')
-          .ilike('email', authData.user.email.trim())
-          .maybeSingle();
-
-        if (byEmailData) {
-          adminRecord = byEmailData;
-        } else if (byEmailError) {
-          queryError = byEmailError;
-        }
-      }
-    }
-
-    if (queryError) {
-      console.error('[Admin Auth] Error querying admin_users table:', queryError);
-    }
-
-    if (!adminRecord) {
-      // User authenticated in auth.users, but is not found in the admin_users table
+    if (!designatedAdminId && !designatedAdminEmail) {
+      console.error('[Admin Auth] ADMIN_USER_ID environment variable is missing on the server.');
       await supabase.auth.signOut();
       return NextResponse.json(
         { 
-          error: 'Access denied. Your account is not registered as an authorized administrator.',
-          code: queryError?.code,
-          hint: queryError ? 'Database query error encountered. Please check admin_users table and RLS policies.' : undefined
+          error: 'Server configuration error: ADMIN_USER_ID environment variable is not configured on Vercel.',
+          authUserId: authData.user.id
         },
-        { status: 403 }
+        { status: 500 }
       );
     }
 
-    const allowedRoles = ['super_admin', 'admin', 'editor'];
-    if (!allowedRoles.includes(adminRecord.role)) {
+    if (!isDesignatedAdmin(authData.user)) {
+      console.warn('[Admin Auth] Access denied: User is authenticated in Supabase Auth but does not match ADMIN_USER_ID.', {
+        authUserId: authData.user.id,
+        authUserEmail: authData.user.email
+      });
       await supabase.auth.signOut();
       return NextResponse.json(
-        { error: 'Access denied. Insufficient administrative privileges.' },
+        { 
+          error: 'Access denied. Your account is not authorized as the administrator.',
+          authUserId: authData.user.id
+        },
         { status: 403 }
       );
     }
@@ -119,7 +87,7 @@ export async function POST(req: NextRequest) {
       user: {
         id: authData.user.id,
         email: authData.user.email,
-        role: adminRecord.role
+        role: 'super_admin'
       }
     });
 

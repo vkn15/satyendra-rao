@@ -206,18 +206,43 @@ as $$
 $$;
 
 -- Policies for admin_users
+-- Note: Do NOT call public.is_admin() inside admin_users policies to prevent infinite recursion (42P17).
+drop policy if exists "Allow admins to read admin_users" on public.admin_users;
 create policy "Allow admins to read admin_users"
 on public.admin_users for select
-using (auth.uid() = id or public.is_admin() or auth.role() = 'service_role');
+using (
+  auth.uid() = id 
+  or lower(email) = lower(auth.jwt() ->> 'email')
+  or auth.role() = 'service_role'
+);
 
+drop policy if exists "Allow super admin to manage admin_users" on public.admin_users;
 create policy "Allow super admin to manage admin_users"
 on public.admin_users for all
 using (
-  exists (
-    select 1 from public.admin_users
-    where id = auth.uid() and role = 'super_admin'
-  ) or auth.role() = 'service_role'
+  auth.uid() = id 
+  or auth.role() = 'service_role'
 );
+
+-- DIAGNOSTIC AND SYNC QUERY (Run in Supabase SQL Editor if needed):
+-- 1. Check if auth user ID matches public.admin_users ID:
+--    select 
+--      au.id as auth_id, 
+--      au.email as auth_email, 
+--      adm.id as admin_table_id, 
+--      adm.email as admin_table_email, 
+--      adm.role as admin_role,
+--      (au.id = adm.id) as id_matches
+--    from auth.users au
+--    left join public.admin_users adm on lower(au.email) = lower(adm.email)
+--    where lower(au.email) = 'satyendra_rao@outlook.com';
+--
+-- 2. If id_matches is false, sync the ID:
+--    update public.admin_users adm
+--    set id = au.id
+--    from auth.users au
+--    where lower(adm.email) = lower(au.email)
+--      and lower(au.email) = 'satyendra_rao@outlook.com';
 
 -- INSTRUCTIONS TO CREATE FIRST ADMIN USER IN SUPABASE:
 -- 1. Create a user in Supabase Auth via Dashboard: Authentication -> Users -> Add User.
